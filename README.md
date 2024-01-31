@@ -17,8 +17,4 @@
 ![Home Assistant ESPHome Integration Living Room Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Home%20Assistant%20ESPHome%20Integration%20Living%20Room%20Air%20Quality.png)
 ![IKEA VINDRIKTNING on the Shelf](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20on%20the%20Shelf.png)
 ![IKEA VINDRIKTNING on the second](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20on%20the%20second%20Shelf.png)
-[![IKEA VINDRIKTNING Colors](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20Colors.mp4)](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20Colors.mp4)
-
-[![IKEA VINDRIKTNING Colors](https://www.ikea.com/pvid/1069524_fe001610.mp4)](https://www.ikea.com/pvid/1069524_fe001610.mp4)
-
 ![IKEA VINDRIKTNING USB-C](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20USB-C.png)
