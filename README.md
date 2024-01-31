@@ -20,7 +20,7 @@
 > [!IMPORTANT]
 > ### Whats need
 > 
-> ESPHome or Download my Firmware
+> ESPHome or Download [Firmware](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/README.md#esphome-firmwares)
 > 
 > ESP Board with 5V or Step-Down Converter for ESP Board with 3V
 >
@@ -48,7 +48,7 @@
 >
 > Boards [ESP8266 Wemos D1 Mini](https://s.click.aliexpress.com/e/_Dm8FxHL), [ESP32 Wemos D1 Mini](https://s.click.aliexpress.com/e/_DFpDpnJ) or [ESP32 C3 SuperMini](https://s.click.aliexpress.com/e/_DlP529f) without ADC Pin
 >
-> [MQ-135](https://s.click.aliexpress.com/e/_DDRkLM1)
+> Carbon Monoxide [MQ-135](https://s.click.aliexpress.com/e/_DDRkLM1)
 > 
 > Cables [Dupont Line](https://s.click.aliexpress.com/e/_DFdLicl)
 >
