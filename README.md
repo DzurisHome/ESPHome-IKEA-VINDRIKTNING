@@ -56,6 +56,22 @@
 
 </br>
 
+| PIN   | VINDRIKTNING      |
+|-------|-------------------|
+| +5V   | 5 Voltage         |
+| GND   | Ground            |
+| REST  | D2                |
+| FAN-  | D4                |
+
+| PIN   | MQ-135            |
+|-------|-------------------|
+| VCC   | 5/3 Voltage       |
+| GND   | Ground            |
+| A OUT | ADC               |
+
+
+</br>
+
 ### ESPHome Configs
 - [ESP8266]()
 - [ESP8266 MQ-135]()
