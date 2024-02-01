@@ -69,6 +69,14 @@
 | GND   | Ground            |
 | A OUT | ADC               |
 
+</br>
+
+### Colors
+![#00ff00](https://via.placeholder.com/15/00ff00/000000?text=+) `GREEN` 0-30 μg/m³
+
+![#ffff00](https://via.placeholder.com/15/ffff00/000000?text=+) `YELLOW` 30-100 μg/m³
+
+![#ff0000](https://via.placeholder.com/15/ff0000/000000?text=+) `RED` 100+ μg/m³
 
 </br>
 
