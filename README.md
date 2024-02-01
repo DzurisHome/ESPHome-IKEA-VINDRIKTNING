@@ -110,20 +110,6 @@
 
 </br>
 
-### ESPHome Configs
-- [ESP8266](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp8266.yaml)
-- [ESP8266 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp8266-mq-135.yaml)
-- [ESP32](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp32.yaml)
-- [ESP32 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp32-mq-135.yaml)
-
-### ESPHome Firmwares
-- [ESP8266]()
-- [ESP8266 MQ-135]()
-- [ESP32]()
-- [ESP32 MQ-135]()
-
-</br>
-
 ![IKEA VINDRIKTNING 0.5](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.5.png)
 ![IKEA VINDRIKTNING 0.7](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.7.png)
 ![IKEA VINDRIKTNING 0.8](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.8.png)
