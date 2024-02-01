@@ -57,6 +57,7 @@
 </br>
 
 ![IKEA VINDRIKTNING PCB](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20PCB.png)
+![IKEA VINDRIKTNING PCB Cables](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20PCB%20Cables.png)
 
 </br>
 
@@ -67,6 +68,10 @@
 | 🟡 REST      | D2                               |
 | 🟢 FAN-      | D4                               |
 
+</br>
+
+![MQ-135 Caables](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/MQ-135%20Cables.png)
+
 | MQ-135 | ESP Board or Step-Down Converter |
 |--------|----------------------------------|
 | VCC    | 5/3 Voltage                      |
@@ -74,6 +79,32 @@
 | A OUT  | ADC                              |
 
 </br>
+
+![IKEA VINDRIKTNING 0.1](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.1.jpg)
+![IKEA VINDRIKTNING 0.2](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.2.png)
+
+</br>
+
+![IKEA VINDRIKTNING 0.3](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.3.png)
+![IKEA VINDRIKTNING 0.4](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.4.png)
+
+</br>
+
+### ESPHome Configs
+- [ESP8266](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp8266.yaml)
+- [ESP8266 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp8266-mq-135.yaml)
+- [ESP32](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp32.yaml)
+- [ESP32 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp32-mq-135.yaml)
+
+### ESPHome Firmwares
+- [ESP8266]()
+- [ESP8266 MQ-135]()
+- [ESP32]()
+- [ESP32 MQ-135]()
+
+</br>
+
+![IKEA VINDRIKTNING 0.6](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.6.png)
 
 ### Colors
 🟩 `GREEN` 0-30 μg/m³
@@ -95,3 +126,9 @@
 - [ESP8266 MQ-135]()
 - [ESP32]()
 - [ESP32 MQ-135]()
+
+</br>
+
+![IKEA VINDRIKTNING 0.5](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.5.png)
+![IKEA VINDRIKTNING 0.7](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.7.png)
+![IKEA VINDRIKTNING 0.8](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.8.png)
