@@ -86,16 +86,16 @@
 </br>
 
 ### ESPHome Configs
-- [ESP8266](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/dzuris-home-esphome-ikea-vindriktning-esp8266.yaml)
-- [ESP8266 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/dzuris-home-esphome-ikea-vindriktning-esp8266-mq-135.yaml)
-- [ESP32](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/dzuris-home-esphome-ikea-vindriktning-esp32.yaml)
-- [ESP32 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/dzuris-home-esphome-ikea-vindriktning-esp32-mq-135.yaml)
+- [ESP8266](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/dzuris-home-esphome-config-ikea-vindriktning-esp8266.yaml)
+- [ESP8266 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/dzuris-home-esphome-config-ikea-vindriktning-esp8266-mq-135.yaml)
+- [ESP32](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/dzuris-home-esphome-config-ikea-vindriktning-esp32.yaml)
+- [ESP32 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/dzuris-home-esphome-config-ikea-vindriktning-esp32-mq-135.yaml)
 
 ### ESPHome Firmwares
-- [ESP8266]()
-- [ESP8266 MQ-135]()
-- [ESP32]()
-- [ESP32 MQ-135]()
+- [ESP8266](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Firmware/dzuris-home-esphome-firmware-ikea-vindriktning-esp8266.bin)
+- [ESP8266 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Firmware/dzuris-home-esphome-firmware-ikea-vindriktning-esp8266-mq-135.bin)
+- [ESP32](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Firmware/dzuris-home-esphome-firmware-ikea-vindriktning-esp32.bin)
+- [ESP32 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Firmware/dzuris-home-esphome-firmware-ikea-vindriktning-esp32-mq-135.bin)
 
 </br>
 
