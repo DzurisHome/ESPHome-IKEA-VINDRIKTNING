@@ -38,8 +38,8 @@
 
 </br>
 
-![Home Assistant ESPHome Integration Living Room Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Home%20Assistant%20ESPHome%20Integration%20Living%20Room%20Air%20Quality.png)
-![ESPHome WebServer Living Room Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20WebServer%20Living%20Room%20Air%20Quality.png)
+![Home Assistant ESPHome Integration Living Room Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/Home%20Assistant%20ESPHome%20Integration%20Living%20Room%20Air%20Quality.png)
+![ESPHome WebServer Living Room Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/ESPHome%20WebServer%20Living%20Room%20Air%20Quality.png)
 
 </br>
 
@@ -56,8 +56,8 @@
 
 </br>
 
-![IKEA VINDRIKTNING PCB](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20PCB.png)
-![IKEA VINDRIKTNING PCB Cables](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20PCB%20Cables.png)
+![IKEA VINDRIKTNING PCB](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%20PCB.png)
+![IKEA VINDRIKTNING PCB Cables](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%20PCB%20Cables.png)
 
 | VINDRIKTNING | ESP Board or Step-Down Converter |
 |--------------|----------------------------------|
@@ -68,7 +68,7 @@
 
 </br>
 
-![MQ-135 Caables](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/MQ-135%20Cables.png)
+![MQ-135 Caables](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/MQ-135%20Cables.png)
 
 | MQ-135 | ESP Board or Step-Down Converter |
 |--------|----------------------------------|
@@ -78,18 +78,18 @@
 
 </br>
 
-![IKEA VINDRIKTNING 0.1](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.1.jpg)
-![IKEA VINDRIKTNING 0.2](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.2.png)
-![IKEA VINDRIKTNING 0.3](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.3.png)
-![IKEA VINDRIKTNING 0.4](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.4.png)
+![IKEA VINDRIKTNING 0.1](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.1.jpg)
+![IKEA VINDRIKTNING 0.2](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.2.png)
+![IKEA VINDRIKTNING 0.3](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.3.png)
+![IKEA VINDRIKTNING 0.4](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.4.png)
 
 </br>
 
 ### ESPHome Configs
-- [ESP8266](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp8266.yaml)
-- [ESP8266 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp8266-mq-135.yaml)
-- [ESP32](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp32.yaml)
-- [ESP32 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/dzuris-home-esphome-ikea-vindriktning-esp32-mq-135.yaml)
+- [ESP8266](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/dzuris-home-esphome-ikea-vindriktning-esp8266.yaml)
+- [ESP8266 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/dzuris-home-esphome-ikea-vindriktning-esp8266-mq-135.yaml)
+- [ESP32](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/dzuris-home-esphome-ikea-vindriktning-esp32.yaml)
+- [ESP32 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/dzuris-home-esphome-ikea-vindriktning-esp32-mq-135.yaml)
 
 ### ESPHome Firmwares
 - [ESP8266]()
@@ -99,8 +99,8 @@
 
 </br>
 
-![IKEA VINDRIKTNING 0.6](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.6.png)
-![IKEA VINDRIKTNING on the Shelf](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20on%20the%20Shelf.png)
+![IKEA VINDRIKTNING 0.6](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.6.png)
+![IKEA VINDRIKTNING on the Shelf](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%20on%20the%20Shelf.png)
 
 ### Colors
 🟩 `GREEN` 0-30 μg/m³
@@ -111,6 +111,6 @@
 
 </br>
 
-![IKEA VINDRIKTNING 0.5](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.5.png)
-![IKEA VINDRIKTNING 0.7](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.7.png)
-![IKEA VINDRIKTNING 0.8](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.8.png)
+![IKEA VINDRIKTNING 0.5](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.5.png)
+![IKEA VINDRIKTNING 0.7](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.7.png)
+![IKEA VINDRIKTNING 0.8](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.8.png)
