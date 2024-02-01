@@ -100,6 +100,7 @@
 </br>
 
 ![IKEA VINDRIKTNING 0.6](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.6.png)
+![IKEA VINDRIKTNING on the Shelf](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20on%20the%20Shelf.png)
 
 ### Colors
 🟩 `GREEN` 0-30 μg/m³
