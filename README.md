@@ -59,8 +59,6 @@
 ![IKEA VINDRIKTNING PCB](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20PCB.png)
 ![IKEA VINDRIKTNING PCB Cables](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%20PCB%20Cables.png)
 
-</br>
-
 | VINDRIKTNING | ESP Board or Step-Down Converter |
 |--------------|----------------------------------|
 | 🔴 +5V       | 5 Voltage                        |
@@ -82,9 +80,6 @@
 
 ![IKEA VINDRIKTNING 0.1](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.1.jpg)
 ![IKEA VINDRIKTNING 0.2](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.2.png)
-
-</br>
-
 ![IKEA VINDRIKTNING 0.3](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.3.png)
 ![IKEA VINDRIKTNING 0.4](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/IKEA%20VINDRIKTNING%200.4.png)
 
