@@ -105,9 +105,9 @@
 ### Colors
 🟩 `GREEN` 0-35 μg/m³
 
-🟧 `ORANGE` 36-100 μg/m³
+🟧 `ORANGE` 36-85 μg/m³
 
-🟥 `RED` 101+ μg/m³
+🟥 `RED` 86+ μg/m³
 
 </br>
 
