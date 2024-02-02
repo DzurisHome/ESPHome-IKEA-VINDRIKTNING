@@ -103,11 +103,11 @@
 ![IKEA VINDRIKTNING on the Shelf](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%20on%20the%20Shelf.png)
 
 ### Colors
-🟩 `GREEN` 0-30 μg/m³
+🟩 `GREEN` 0-35 μg/m³
 
-🟧 `ORANGE` 30-100 μg/m³
+🟧 `ORANGE` 36-100 μg/m³
 
-🟥 `RED` 100+ μg/m³
+🟥 `RED` 101+ μg/m³
 
 </br>
 
