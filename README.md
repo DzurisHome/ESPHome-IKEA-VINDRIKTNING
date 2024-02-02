@@ -70,11 +70,11 @@
 
 ![MQ-135 Caables](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/MQ-135%20Cables.png)
 
-| MQ-135 | ESP Board or Step-Down Converter |
-|--------|----------------------------------|
-| VCC    | 5/3 Voltage                      |
-| GND    | Ground                           |
-| A OUT  | ADC                              |
+| MQ-135    | ESP Board or Step-Down Converter |
+|-----------|----------------------------------|
+| 🔴 VCC    | 5/3 Voltage                      |
+| ⚫ GND    | Ground                           |
+| 🟢 A OUT  | ADC                              |
 
 </br>
 
@@ -105,7 +105,7 @@
 ### Colors
 🟩 `GREEN` 0-30 μg/m³
 
-🟨 `YELLOW` 30-100 μg/m³
+🟧 `ORANGE` 30-100 μg/m³
 
 🟥 `RED` 100+ μg/m³
 
