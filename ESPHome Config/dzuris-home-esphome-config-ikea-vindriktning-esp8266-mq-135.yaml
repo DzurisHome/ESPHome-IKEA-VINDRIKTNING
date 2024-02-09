@@ -5,6 +5,11 @@ substitutions:
   device_description: "ESPHome IKEA VINDRIKTNING by Dzuriš Home"
   project_version: "1.0"
 
+#OTA Remote
+dashboard_import: #Dont Delete when you want OTA Remote if you dont want OTA Remote Delete (dashboard_import and below that)
+  package_import_url: github://DzurisHome/ESPHome-IKEA-VINDRIKTNING/ESPHomeConfig/dzuris-home-esphome-config-ikea-vindriktning-esp8266-mq-135.yaml
+  import_full_config: false
+
 #ESPHome Core
 esphome:
   name: "${name}"
@@ -57,8 +62,8 @@ mqtt: #If you dont have or want MQTT Broker Delete (mqtt and below that)
   discovery: false #If you chnnge to true Home Assistant dont discovery device only from MQTT Integration
   topic_prefix: "Air Quality Dzuriš Home"
 
-#Home Assistant API Integration
-api: #Home Assistant API if you dont have Home Assistant Delete (api and below that)
+#ESPHome API
+api: #Dont Delete when you want OTA Remote if you dont want ESPHome API and OTA Remote Delete (api and below that)
   encryption:
     key: #Key or !secret api_encryption_key
 
