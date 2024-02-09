@@ -1,8 +1,9 @@
 substitutions:
   name: "air-quality-dzuris-home"
   area: "#Living Room"
-  project_name: "ESPHome IKEA VINDRIKTNING by Dzuriš Home"
+  project_name: "Dzuriš Home.ESPHome IKEA VINDRIKTNING"
   device_description: "ESPHome IKEA VINDRIKTNING by Dzuriš Home"
+  project_version: "1.0"
 
 #ESPHome Core
 esphome:
@@ -11,6 +12,7 @@ esphome:
   name_add_mac_suffix: true #Delete (name_add_mac_suffix) when you Renamed Device
   project:
     name: "${project_name}"
+    version: "${project_version}"
 
 esp8266:
   board: d1_mini
