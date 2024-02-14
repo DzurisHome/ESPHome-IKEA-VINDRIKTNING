@@ -1,23 +1,7 @@
-substitutions:
-  name: "air-quality-dzuris-home"
-  area: "#Living Room"
-  project_name: "Dzuriš Home.ESPHome IKEA VINDRIKTNING"
-  device_description: "ESPHome IKEA VINDRIKTNING by Dzuriš Home"
-  project_version: "1.0"
-
-#OTA Remote
-dashboard_import: #Dont Delete when you want OTA Remote if you dont want OTA Remote Delete (dashboard_import and below that)
-  package_import_url: github://DzurisHome/ESPHome-IKEA-VINDRIKTNING/ESPHomeConfig/dzuris-home-esphome-config-ikea-vindriktning-esp8266-mq-135.yaml
-  import_full_config: false
-
 #ESPHome Core
 esphome:
-  name: "${name}"
-  area: "${area}"
-  name_add_mac_suffix: true #Delete (name_add_mac_suffix) when you Renamed Device
-  project:
-    name: "${project_name}"
-    version: "${project_version}"
+  name: air-quality-dzuris-home
+  area: Living Room
 
 esp8266:
   board: d1_mini
@@ -30,7 +14,7 @@ wifi:
   ssid: #SSID or !secret wifi_ssid
   password: #Password or !secret wifi_password
 
-  manual_ip: #If you dont want set manual IPs Delete (manual_ip and uder)
+  manual_ip: #If you don't want set manual IPs, Delete (manual_ip and below that)
     static_ip: #Air Quality Device IP
     gateway: #Router IP
     subnet: #Router Subnet IP
@@ -42,7 +26,7 @@ wifi:
 captive_portal:
 
 #Web Server
-web_server: #If you dont want Web Server Delete (web_server and below that) 
+web_server: #If you don't want Web Server, Delete (web_server and below that) 
   port: 80
   auth:
     username: #Username or !secret web_server_username
@@ -54,21 +38,21 @@ ota:
   password: #Password or !secret ota_password
 
 #MQTT
-mqtt: #If you dont have or want MQTT Broker Delete (mqtt and below that)
-  broker: #Broekr or !secret mqtt_broker_ip_address
+mqtt: #If you don't have or want MQTT Broker, Delete (mqtt and below that)
+  broker: #Broker or !secret mqtt_broker_ip_address
   username: #Username or !secret mqtt_broker_username
   password: #Password or !secret mqtt_broker_password
   client_id: "Air Quality Dzuriš Home"
-  discovery: false #If you chnnge to true Home Assistant dont discovery device only from MQTT Integration
+  discovery: false #If you chnnge to true Home Assistant don't discovery device only from MQTT Integration
   topic_prefix: "Air Quality Dzuriš Home"
 
 #ESPHome API
-api: #Dont Delete when you want OTA Remote if you dont want ESPHome API and OTA Remote Delete (api and below that)
+api: #If you don't want ESPHome API, Delete (api and below that)
   encryption:
     key: #Key or !secret api_encryption_key
 
 #Home Assistant Time
-time: #Home Assistant time something other or Delete (time and below that)
+time: #Home Assistant time, other time or Delete (time and below that)
   - platform: homeassistant
     id: homeassistant_time
 
@@ -83,18 +67,18 @@ binary_sensor:
     pin:
       number: D4
       inverted: true
-    name: "Living Room Air Quality Fan"
+    name: "Air Quality Fan"
 
 sensor:
   - platform: pm1006
     pm_2_5:
       id: particulate_matter_2_5
-      name: "Living Room Particulate Matter 2.5µm"
+      name: "Particulate Matter 2.5µm"
 
   - platform: adc
     pin: A0
     id: carbon_monoxide
-    name: "Living Room Carbon Monoxide"
+    name: "Carbon Monoxide"
     icon: mdi:molecule-co
     update_interval: 30s
     unit_of_measurement: "ppm"
@@ -105,7 +89,7 @@ sensor:
 
 #Diagnostic
   - platform: wifi_signal
-    name: "Living Room Air Quality RSSI"
+    name: "Air Quality Dzuriš Home RSSI"
     update_interval: 1min
     unit_of_measurement: "dBm"
     device_class: "signal_strength"
@@ -140,7 +124,7 @@ sensor:
 #Sensor
 text_sensor:
   - platform: template
-    name: "Living Room Air Quality Color"
+    name: "Air Quality Color"
     icon: mdi:led-strip
     update_interval: 30s
     lambda: |-
@@ -153,7 +137,7 @@ text_sensor:
       }
 
   - platform: template
-    name: "Living Room Particulate Matter 2.5µm Air Quality"
+    name: "Particulate Matter 2.5µm Air Quality"
     icon: mdi:emoticon
     update_interval: 30s
     lambda: |-
@@ -174,7 +158,7 @@ text_sensor:
       }
 
   - platform: template
-    name: "Living Room Carbon Monoxide Air Quality"
+    name: "Carbon Monoxide Air Quality"
     icon: mdi:emoticon
     update_interval: 30s
     lambda: |-
@@ -195,11 +179,11 @@ text_sensor:
 #Diagnostic
   - platform: template
     id: uptime_sensor
-    name: "Living Room Air Quality Uptime"
+    name: "Air Quality Dzuriš Home Uptime"
     icon: mdi:clock-time-four-outline
     entity_category: "diagnostic"
 
 #Configuration
 button:
   - platform: restart
-    name: "Living Room Air Quality Restart"
+    name: "Air Quality Dzuriš Home Restart"
