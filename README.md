@@ -63,8 +63,26 @@
 |--------------|----------------------------------|
 | 🔴 +5V       | 5 Voltage                        |
 | ⚫ GND       | Ground                           |
-| 🟡 REST      | D2                               |
-| 🟢 FAN-      | D4                               |
+
+| VINDRIKTNING | ESP8266 Wemos D1 Mini |
+|--------------|-----------------------|
+| 🟡 REST      | D2                    |
+| 🟢 FAN-      | D4                    |
+
+| VINDRIKTNING | ESP32 Wemos D1 Mini |
+|--------------|---------------------|
+| 🟡 REST      | D2                  |
+| 🟢 FAN-      | D4                  |
+
+| VINDRIKTNING | XIAO-ESP32-C3 |
+|--------------|---------------|
+| 🟡 REST      | D10           |
+| 🟢 FAN-      | D4            |
+
+| VINDRIKTNING | ESP32 C3 Supermini |
+|--------------|--------------------|
+| 🟡 REST      | D2                 |
+| 🟢 FAN-      | D4                 |
 
 </br>
 
