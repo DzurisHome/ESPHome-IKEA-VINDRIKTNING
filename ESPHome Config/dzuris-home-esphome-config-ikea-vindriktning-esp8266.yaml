@@ -1,6 +1,6 @@
 #ESPHome Core
 esphome:
-  name: living-room-air-quality
+  name: air-quality-dzuris-home
   area: Living Room
 
 esp8266:
@@ -11,48 +11,48 @@ logger:
 
 #WiFi
 wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
+  ssid: #SSID or !secret wifi_ssid
+  password: #Password or !secret wifi_password
 
-  manual_ip:
-    static_ip: 192.168.0.155
-    gateway: 192.168.0.1
-    subnet: 255.255.255.0
+  manual_ip: #If you don't want set manual IPs, Delete (manual_ip and below that)
+    static_ip: #Air Quality Device IP
+    gateway: #Router IP
+    subnet: #Router Subnet IP
 
   ap:
-    ssid: "Living Room Air Quality DH AP"
-    password: !secret ap_password
+    ssid: "Air Quality Dzuriš Home AP"
+    password: #Acess Point password or !secret ap_password
 
 captive_portal:
 
 #Web Server
-web_server:
+web_server: #If you don't want Web Server, Delete (web_server and below that) 
   port: 80
   auth:
-    username: !secret web_server_username
-    password: !secret web_server_password
+    username: #Username or !secret web_server_username
+    password: #Password or !secret web_server_password
 
 #OTA
 ota:
   safe_mode: true
-  password: !secret ota_password
+  password: #Password or !secret ota_password
 
 #MQTT
-mqtt:
-  broker: !secret mqtt_broker_ip_address
-  username: !secret mqtt_broker_username
-  password: !secret mqtt_broker_password
-  client_id: "Living Room Air Quality"
-  discovery: false
-  topic_prefix: "Living Room Air Quality"
+mqtt: #If you don't have or want MQTT Broker, Delete (mqtt and below that)
+  broker: #Broker or !secret mqtt_broker_ip_address
+  username: #Username or !secret mqtt_broker_username
+  password: #Password or !secret mqtt_broker_password
+  client_id: "Air Quality Dzuriš Home"
+  discovery: false #If you chnnge to true Home Assistant don't discovery device only from MQTT Integration
+  topic_prefix: "Air Quality Dzuriš Home"
 
-#Home Assistant API Integration
-api:
+#ESPHome API
+api: #If you don't want ESPHome API, Delete (api and below that)
   encryption:
-    key: !secret api_encryption_key
+    key: #Key or !secret api_encryption_key
 
 #Home Assistant Time
-time:
+time: #Home Assistant time, other time or Delete (time and below that)
   - platform: homeassistant
     id: homeassistant_time
 
@@ -67,29 +67,17 @@ binary_sensor:
     pin:
       number: D4
       inverted: true
-    name: "Living Room Air Quality Fan"
+    name: "Air Quality Fan"
 
 sensor:
   - platform: pm1006
     pm_2_5:
       id: particulate_matter_2_5
-      name: "Living Room Particulate Matter 2.5µm"
-
-  - platform: adc
-    pin: A0
-    id: carbon_monoxide
-    name: "Living Room Carbon Monoxide"
-    icon: mdi:molecule-co
-    update_interval: 30s
-    unit_of_measurement: "ppm"
-    device_class: "carbon_monoxide"
-    state_class: "measurement"
-    filters:
-        - lambda: return (x * 1024/5); 
+      name: "Particulate Matter 2.5µm"
 
 #Diagnostic
   - platform: wifi_signal
-    name: "Living Room Air Quality RSSI"
+    name: "Air Quality Dzuriš Home RSSI"
     update_interval: 1min
     unit_of_measurement: "dBm"
     device_class: "signal_strength"
@@ -124,7 +112,7 @@ sensor:
 #Sensor
 text_sensor:
   - platform: template
-    name: "Living Room Air Quality Color"
+    name: "Air Quality Color"
     icon: mdi:led-strip
     update_interval: 30s
     lambda: |-
@@ -137,7 +125,7 @@ text_sensor:
       }
 
   - platform: template
-    name: "Living Room Particulate Matter 2.5µm Air Quality"
+    name: "Particulate Matter 2.5µm Air Quality"
     icon: mdi:emoticon
     update_interval: 30s
     lambda: |-
@@ -157,33 +145,14 @@ text_sensor:
         return {"Hazardous"};
       }
 
-  - platform: template
-    name: "Living Room Carbon Monoxide Air Quality"
-    icon: mdi:emoticon
-    update_interval: 30s
-    lambda: |-
-      if (id(carbon_monoxide).state <= 50.0) {
-        return {"Excellent"};
-      } else if (id(carbon_monoxide).state > 50.0 && id(carbon_monoxide).state <= 100.0) {
-        return {"Good"};
-      } else if (id(carbon_monoxide).state > 100.0 && id(carbon_monoxide).state <= 200.0) {
-        return {"Moderate"};
-      } else if (id(carbon_monoxide).state > 200.0 && id(carbon_monoxide).state <= 400.0) {
-        return {"Unhealthy for Sensitive Groups"};
-      } else if (id(carbon_monoxide).state > 400.0 && id(carbon_monoxide).state <= 800.0) {
-        return {"Unhealthy"};
-      } else {
-        return {"Very Unhealthy"};
-      }
-
 #Diagnostic
   - platform: template
     id: uptime_sensor
-    name: "Living Room Air Quality Uptime"
+    name: "Air Quality Dzuriš Home Uptime"
     icon: mdi:clock-time-four-outline
     entity_category: "diagnostic"
 
 #Configuration
 button:
   - platform: restart
-    name: "Living Room Air Quality Restart"
+    name: "Air Quality Dzuriš Home Restart"
