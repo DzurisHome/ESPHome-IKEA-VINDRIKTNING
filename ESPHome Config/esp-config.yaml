@@ -58,22 +58,34 @@ time: #Home Assistant time, other time or Delete (time and below that)
 
 #Device Required
 uart:
-  rx_pin: D2
+  rx_pin: #ESP8266 Wemos D1 Mini: D2, ESP32 Wemos D1 Mini: GPIO21, XIAO-ESP32-C3: GPIO6, ESP32 C3 Supermini: GPIO8
   baud_rate: 9600
 
 #Device
-binary_sensor:
+binary_sensor: #If you don't have or want FAN, Delete (binary_sensor and below that)
   - platform: gpio
     pin:
-      number: D4
+      number: #ESP8266 Wemos D1 Mini: D4, ESP32 Wemos D1 Mini: GPIO16,	XIAO-ESP32-C3: GPIO9, ESP32 C3 Supermini: GPIO3
       inverted: true
-    name: "Air Quality Fan"
+    name: "Air Quality Fan Dzuriš Home"
 
 sensor:
   - platform: pm1006
     pm_2_5:
       id: particulate_matter_2_5
       name: "Particulate Matter 2.5µm"
+
+  - platform: adc #If you don't have or want Carbon Monoxide, Delete (platform: adc and below that)
+    pin: #ESP8266 Wemos D1 Mini: A0, ESP32 Wemos D1 Mini: GPIO34,	XIAO-ESP32-C3: GPIO2, ESP32 C3 Supermini: GPIO5
+    id: carbon_monoxide
+    name: "Carbon Monoxide Dzuriš Home"
+    icon: mdi:molecule-co
+    update_interval: 30s
+    unit_of_measurement: "ppm"
+    device_class: "carbon_monoxide"
+    state_class: "measurement"
+    filters:
+        - lambda: return (x * 1024/5);
 
 #Diagnostic
   - platform: wifi_signal
@@ -112,7 +124,7 @@ sensor:
 #Sensor
 text_sensor:
   - platform: template
-    name: "Air Quality Color"
+    name: "Air Quality Color Dzuriš Home"
     icon: mdi:led-strip
     update_interval: 30s
     lambda: |-
@@ -125,7 +137,7 @@ text_sensor:
       }
 
   - platform: template
-    name: "Particulate Matter 2.5µm Air Quality"
+    name: "Particulate Matter 2.5µm Air Quality Dzuriš Home"
     icon: mdi:emoticon
     update_interval: 30s
     lambda: |-
@@ -143,6 +155,25 @@ text_sensor:
         return {"Very Unhealthy"};
       } else {
         return {"Hazardous"};
+      }
+
+  - platform: template #If you don't have or want Carbon Monoxide, Delete (platform: template and below that)
+    name: "Carbon Monoxide Air Quality Dzuriš Home"
+    icon: mdi:emoticon
+    update_interval: 30s
+    lambda: |-
+      if (id(carbon_monoxide).state <= 50.0) {
+        return {"Excellent"};
+      } else if (id(carbon_monoxide).state > 50.0 && id(carbon_monoxide).state <= 100.0) {
+        return {"Good"};
+      } else if (id(carbon_monoxide).state > 100.0 && id(carbon_monoxide).state <= 200.0) {
+        return {"Moderate"};
+      } else if (id(carbon_monoxide).state > 200.0 && id(carbon_monoxide).state <= 400.0) {
+        return {"Unhealthy for Sensitive Groups"};
+      } else if (id(carbon_monoxide).state > 400.0 && id(carbon_monoxide).state <= 800.0) {
+        return {"Unhealthy"};
+      } else {
+        return {"Very Unhealthy"};
       }
 
 #Diagnostic
