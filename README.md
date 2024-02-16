@@ -46,7 +46,7 @@
 > [!IMPORTANT]
 > ### Recommendations
 >
-> Boards [ESP8266 Wemos D1 Mini](https://s.click.aliexpress.com/e/_Dm8FxHL), [ESP32 Wemos D1 Mini](https://s.click.aliexpress.com/e/_DFpDpnJ) or [ESP32 C3 SuperMini](https://s.click.aliexpress.com/e/_DlP529f) without ADC Pin
+> Boards [ESP8266 Wemos D1 Mini](https://s.click.aliexpress.com/e/_Dm8FxHL), [XIAO ESP32-C3](https://s.click.aliexpress.com/e/_Dd9y9cz), [ESP32 Wemos D1 Mini](https://s.click.aliexpress.com/e/_DFpDpnJ) or [ESP32 C3 SuperMini](https://s.click.aliexpress.com/e/_DlP529f)
 >
 > Carbon Monoxide [MQ-135](https://s.click.aliexpress.com/e/_DDRkLM1)
 > 
@@ -71,18 +71,18 @@
 
 | VINDRIKTNING | ESP32 Wemos D1 Mini |
 |--------------|---------------------|
-| 🟡 REST      | D2                  |
-| 🟢 FAN-      | D4                  |
+| 🟡 REST      | GPIO21              |
+| 🟢 FAN-      | GPIO16              |
 
 | VINDRIKTNING | XIAO-ESP32-C3 |
 |--------------|---------------|
-| 🟡 REST      | D10           |
-| 🟢 FAN-      | D4            |
+| 🟡 REST      | GPIO6         |
+| 🟢 FAN-      | GPIO9         |
 
 | VINDRIKTNING | ESP32 C3 Supermini |
 |--------------|--------------------|
-| 🟡 REST      | D2                 |
-| 🟢 FAN-      | D4                 |
+| 🟡 REST      | GPIO8              |
+| 🟢 FAN-      | GPIO3              |
 
 </br>
 
@@ -92,7 +92,22 @@
 |-----------|----------------------------------|
 | 🔴 VCC    | 5/3 Voltage                      |
 | ⚫ GND    | Ground                           |
-| 🟢 A OUT  | ADC                              |
+
+| VINDRIKTNING | ESP8266 Wemos D1 Mini |
+|--------------|-----------------------|
+| 🟢 A OUT     | A0                    |
+
+| VINDRIKTNING | ESP32 Wemos D1 Mini |
+|--------------|---------------------|
+| 🟢 A OUT     | GPIO34              |
+
+| VINDRIKTNING | XIAO-ESP32-C3 |
+|--------------|---------------|
+| 🟢 A OUT     | GPIO2         |
+
+| VINDRIKTNING | ESP32 C3 Supermini |
+|--------------|--------------------|
+| 🟢 A OUT     | GPIO5              |
 
 </br>
 
@@ -104,16 +119,11 @@
 </br>
 
 ### ESPHome Configs
-- [ESP8266](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/dzuris-home-esphome-config-ikea-vindriktning-esp8266.yaml)
-- [ESP8266 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/dzuris-home-esphome-config-ikea-vindriktning-esp8266-mq-135.yaml)
-- [ESP32](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/dzuris-home-esphome-config-ikea-vindriktning-esp32.yaml)
-- [ESP32 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/dzuris-home-esphome-config-ikea-vindriktning-esp32-mq-135.yaml)
+- [ESP](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp-config.yaml)
+- RP2040 SOON
 
 ### ESPHome Firmwares
-- [ESP8266](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Firmware/dzuris-home-esphome-firmware-ikea-vindriktning-esp8266.bin)
-- [ESP8266 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Firmware/dzuris-home-esphome-firmware-ikea-vindriktning-esp8266-mq-135.bin)
-- [ESP32](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Firmware/dzuris-home-esphome-firmware-ikea-vindriktning-esp32.bin)
-- [ESP32 MQ-135](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Firmware/dzuris-home-esphome-firmware-ikea-vindriktning-esp32-mq-135.bin)
+- SOON
 
 </br>
 
