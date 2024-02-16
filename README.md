@@ -38,7 +38,7 @@
 
 </br>
 
-![Home Assistant ESPHome Integration Living Room Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/Home%20Assistant%20ESPHome%20Integration%20Living%20Room%20Air%20Quality.png)
+![Home Assistant ESPHome Integration Living Room Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/Home%20Assistant%20ESPHome%20Integration%20Living%20Room%20Air%20Quality.jpg)
 ![ESPHome WebServer Living Room Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/ESPHome%20WebServer%20Living%20Room%20Air%20Quality.png)
 
 </br>
