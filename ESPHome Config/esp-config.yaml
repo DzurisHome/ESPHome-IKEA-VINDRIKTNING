@@ -68,6 +68,7 @@ binary_sensor: #If you don't have or want FAN, Delete (binary_sensor and below t
       number: #ESP8266 Wemos D1 Mini: D4, ESP32 Wemos D1 Mini: GPIO16,	XIAO-ESP32-C3: GPIO9, ESP32 C3 Supermini: GPIO3
       inverted: true
     name: "Air Quality Fan Dzuriš Home"
+    entity_category: "diagnostic"
 
 sensor:
   - platform: pm1006
