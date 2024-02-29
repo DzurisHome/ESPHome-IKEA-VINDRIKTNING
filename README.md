@@ -2,7 +2,7 @@
 
 ## [LinkTree](https://linktr.ee/DzurisHome)
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N6M7OX3)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/DzurisHome)
 
 </br>
 
@@ -142,3 +142,7 @@
 ![IKEA VINDRIKTNING 0.5](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.5.png)
 ![IKEA VINDRIKTNING 0.7](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.7.png)
 ![IKEA VINDRIKTNING 0.8](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.8.png)
+
+## [LinkTree](https://linktr.ee/DzurisHome)
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/DzurisHome)
