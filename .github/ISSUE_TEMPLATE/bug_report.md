@@ -16,4 +16,4 @@ Steps to reproduce behavior:
 
 **ESPHome Version and Device Version:**
  - ESPHome: 2023.10.1
- - ESPhome Device 2023.10.1
+ - ESPhome Device: 2023.10.1
