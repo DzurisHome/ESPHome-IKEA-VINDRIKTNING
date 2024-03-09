@@ -17,7 +17,7 @@
 
 </br>
 
-> [!IMPORTANT]
+> [!NOTE]
 > ### Whats need
 > 
 > ESPHome or Download [Firmware](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/README.md#esphome-firmwares)
@@ -43,7 +43,7 @@
 
 </br>
 
-> [!IMPORTANT]
+> [!CAUTION]
 > ### Recommendations
 >
 > Boards [ESP8266 Wemos D1 Mini](https://s.click.aliexpress.com/e/_Dm8FxHL), [XIAO ESP32-C3](https://s.click.aliexpress.com/e/_Dd9y9cz), [ESP32 Wemos D1 Mini](https://s.click.aliexpress.com/e/_DFpDpnJ) or [ESP32 C3 SuperMini](https://s.click.aliexpress.com/e/_DlP529f)
