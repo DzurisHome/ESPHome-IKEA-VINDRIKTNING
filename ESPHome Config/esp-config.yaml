@@ -4,10 +4,14 @@ esphome:
   area: Living Room
 
 esp8266:
-  board: d1_mini
+  board: d1_mini #if you have another Board change it to yours
 
 #Logger
 logger:
+
+#Safe Mode
+safe_mode:
+  boot_is_good_after: 1min
 
 #WiFi
 wifi:
@@ -25,6 +29,20 @@ wifi:
 
 captive_portal:
 
+#OTA
+ota:
+  - platform: esphome
+    password: #Password or !secret ota_password
+
+#SNTP Time
+time: #If you want to change the time on Home Assistant change it or stay on SNTP but you need change timezone and SNTP server for your Country
+  - platform: sntp
+    timezone: Europe/Bratislava
+    servers:
+     - 1.sk.pool.ntp.org
+     - 0.europe.pool.ntp.org
+     - 1.europe.pool.ntp.org
+
 #Web Server
 web_server: #If you don't want Web Server, Delete (web_server and below that) 
   port: 80
@@ -32,10 +50,10 @@ web_server: #If you don't want Web Server, Delete (web_server and below that)
     username: #Username or !secret web_server_username
     password: #Password or !secret web_server_password
 
-#OTA
-ota:
-  safe_mode: true
-  password: #Password or !secret ota_password
+#ESPHome API
+api: #If you don't want ESPHome API, Delete (api and below that)
+  encryption:
+    key: #Key or !secret api_encryption_key
 
 #MQTT
 mqtt: #If you don't have or want MQTT Broker, Delete (mqtt and below that)
@@ -45,16 +63,6 @@ mqtt: #If you don't have or want MQTT Broker, Delete (mqtt and below that)
   client_id: "Air Quality Dzuriš Home"
   discovery: false #If you chnnge to true Home Assistant don't discovery device only from MQTT Integration
   topic_prefix: "Air Quality Dzuriš Home"
-
-#ESPHome API
-api: #If you don't want ESPHome API, Delete (api and below that)
-  encryption:
-    key: #Key or !secret api_encryption_key
-
-#Home Assistant Time
-time: #Home Assistant time, other time or Delete (time and below that)
-  - platform: homeassistant
-    id: homeassistant_time
 
 #Device Required
 uart:
