@@ -51,6 +51,9 @@ web_server: #If you don't want Web Server, Delete (web_server and below that)
   auth:
     username: #Username or !secret web_server_username
     password: #Password or !secret web_server_password
+  include_internal: false
+  log: true
+  version: 3
 
 #ESPHome API
 api: #If you don't want ESPHome API, Delete (api and below that)
