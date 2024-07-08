@@ -12,6 +12,7 @@ logger:
 #Safe Mode
 safe_mode:
   boot_is_good_after: 1min
+  reboot_timeout: 5min
 
 #WiFi
 wifi:
@@ -27,6 +28,7 @@ wifi:
     ssid: "Air Quality Dzuriš Home AP"
     password: #Acess Point password or !secret ap_password
 
+#WiFi Hotspot
 captive_portal:
 
 #OTA
