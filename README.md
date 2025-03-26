@@ -23,8 +23,6 @@
 > ESPHome or Download [Firmware](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/README.md#esphome-firmwares)
 > 
 > ESP Board with 5V or Step-Down Converter for ESP Board with 3V
->
-> MQ-135 only if we want too Carbon Monoxide and ESP Board with ADC Pin too
 > 
 > Some Cables
 > 
@@ -47,8 +45,6 @@
 > ### Recommendations
 >
 > Boards [ESP8266 Wemos D1 Mini](https://s.click.aliexpress.com/e/_Dm8FxHL), [XIAO ESP32-C3](https://s.click.aliexpress.com/e/_Dd9y9cz), [ESP32 Wemos D1 Mini](https://s.click.aliexpress.com/e/_DFpDpnJ) or [ESP32 C3 SuperMini](https://s.click.aliexpress.com/e/_DlP529f)
->
-> Carbon Monoxide [MQ-135](https://s.click.aliexpress.com/e/_DDRkLM1)
 > 
 > Cables [Dupont Line](https://s.click.aliexpress.com/e/_DFdLicl)
 >
@@ -85,29 +81,6 @@
 | 🟢 FAN-      | GPIO3              |
 
 </br>
-
-![MQ-135 Caables](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/MQ-135%20Cables.png)
-
-| MQ-135    | ESP Board or Step-Down Converter |
-|-----------|----------------------------------|
-| 🔴 VCC    | 5/3 Voltage                      |
-| ⚫ GND    | Ground                           |
-
-| VINDRIKTNING | ESP8266 Wemos D1 Mini |
-|--------------|-----------------------|
-| 🟢 A OUT     | A0                    |
-
-| VINDRIKTNING | ESP32 Wemos D1 Mini |
-|--------------|---------------------|
-| 🟢 A OUT     | GPIO34              |
-
-| VINDRIKTNING | XIAO-ESP32-C3 |
-|--------------|---------------|
-| 🟢 A OUT     | GPIO2         |
-
-| VINDRIKTNING | ESP32 C3 Supermini |
-|--------------|--------------------|
-| 🟢 A OUT     | GPIO5              |
 
 </br>
 
