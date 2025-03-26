@@ -1,13 +1,16 @@
 #ESPHome Core
 esphome:
-  name: air-quality-dzuris-home
+  name: ikea-vindriktning-dzuris-home
   area: Living Room
 
-esp8266:
-  board: d1_mini #if you have another Board change it to yours
+esp32:
+  board: esp32-c3-devkitm-1 #if you have another Board change it to yours
+  framework:
+    type: esp-idf
 
 #Logger
 logger:
+  baud_rate: 0
 
 #Safe Mode
 safe_mode:
@@ -20,12 +23,12 @@ wifi:
   password: #Password or !secret wifi_password
 
   manual_ip: #If you don't want set manual IPs, Delete (manual_ip and below that)
-    static_ip: #Air Quality Device IP
+    static_ip: #IKEA VINDRIKTNING Device IP
     gateway: #Router IP
     subnet: #Router Subnet IP
 
   ap:
-    ssid: "Air Quality Dzuriš Home AP"
+    ssid: "IKEA VINDRIKTNING Dzuriš Home AP"
     password: #Acess Point password or !secret ap_password
 
 #WiFi Hotspot
@@ -65,9 +68,20 @@ mqtt: #If you don't have or want MQTT Broker, Delete (mqtt and below that)
   broker: #Broker or !secret mqtt_broker_ip_address
   username: #Username or !secret mqtt_broker_username
   password: #Password or !secret mqtt_broker_password
-  client_id: "Air Quality Dzuriš Home"
+  client_id: "IKEA VINDRIKTNING Dzuriš Home"
   discovery: false #If you chnnge to true Home Assistant don't discovery device only from MQTT Integration
-  topic_prefix: "Air Quality Dzuriš Home"
+  topic_prefix: "IKEA VINDRIKTNING Dzuriš Home"
+
+#BLE
+esp32_ble_tracker: #If you don't want ESP32 BLE Tracker, Delete (esp32_ble_tracker and below that), ESP32 BLE Tracker only works with ESP32
+  scan_parameters:
+    interval: 320ms
+    window: 30ms
+    active: false
+
+#BLE Proxy
+bluetooth_proxy: #If you don't want Bluetooth Proxy, Delete (bluetooth_proxy and below that), Bluetooth Proxy only works with ESP32
+  active: false
 
 #Device Required
 uart:
@@ -80,30 +94,31 @@ binary_sensor: #If you don't have or want FAN, Delete (binary_sensor and below t
     pin:
       number: #ESP8266 Wemos D1 Mini: D4, ESP32 Wemos D1 Mini: GPIO16,	XIAO-ESP32-C3: GPIO9, ESP32 C3 Supermini: GPIO3
       inverted: true
-    name: "Air Quality Fan Dzuriš Home"
+    name: "IKEA VINDRIKTNING Fan"
     entity_category: "diagnostic"
 
 sensor:
   - platform: pm1006
     pm_2_5:
-      id: particulate_matter_2_5
-      name: "Particulate Matter 2.5µm"
-
-  - platform: adc #If you don't have or want Carbon Monoxide, Delete (platform: adc and below that)
-    pin: #ESP8266 Wemos D1 Mini: A0, ESP32 Wemos D1 Mini: GPIO34,	XIAO-ESP32-C3: GPIO2, ESP32 C3 Supermini: GPIO5
-    id: carbon_monoxide
-    name: "Carbon Monoxide Dzuriš Home"
-    icon: mdi:molecule-co
-    update_interval: 30s
-    unit_of_measurement: "ppm"
-    device_class: "carbon_monoxide"
-    state_class: "measurement"
-    filters:
-        - lambda: return (x * 1024/5);
+      id: pm2_5
+      name: "IKEA VINDRIKTNING PM2.5"
+      filters:
+        - sliding_window_moving_average:
+            window_size: 10
+            send_every: 10
+            send_first_at: 1
 
 #Diagnostic
+  - platform: internal_temperature #If you don't want Internal Temperature, Delete (internal_temperature and below that), Internal Temperature only works with ESP32
+    update_interval: 5min
+    name: "IKEA VINDRIKTNING Internal Temperature"
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    state_class: "measurement"
+    entity_category: "diagnostic"
+
   - platform: wifi_signal
-    name: "Air Quality Dzuriš Home RSSI"
+    name: "IKEA VINDRIKTNING RSSI"
     update_interval: 1min
     unit_of_measurement: "dBm"
     device_class: "signal_strength"
@@ -111,93 +126,71 @@ sensor:
     entity_category: "diagnostic"
 
   - platform: uptime
-    id: uptime_seconds
-    name: "Uptime Seconds"
+    type: timestamp
+    name: "IKEA VINDRIKTNING Uptime"
     icon: mdi:clock-time-four-outline
-    update_interval: 1min
-    internal: true
-    on_raw_value:
-      then:
-        - text_sensor.template.publish:
-            id: uptime_sensor
-            state: !lambda |-
-              int seconds = round(id(uptime_seconds).raw_state);
-              int days = seconds / (24 * 3600);
-              seconds = seconds % (24 * 3600);
-              int hours = seconds / 3600;
-              seconds = seconds % 3600;
-              int minutes = seconds /  60;
-              seconds = seconds % 60;
-              return (
-                (days ? to_string(days) + "d " : "") +
-                (hours ? to_string(hours) + "h " : "") +
-                (minutes ? to_string(minutes) + "m " : "") +
-                (to_string(seconds) + "s")
-              ).c_str();
+    device_class: "timestamp"
+    entity_category: "diagnostic"
 
-#Sensor
 text_sensor:
   - platform: template
-    name: "Air Quality Color Dzuriš Home"
+    update_interval: 1s
+    name: "IKEA VINDRIKTNING Color"
     icon: mdi:led-strip
-    update_interval: 30s
-    lambda: |-
-      if (id(particulate_matter_2_5).state <= 35.0) {
-        return {"Green"};
-      } else if (id(particulate_matter_2_5).state > 35.0 && id(particulate_matter_2_5).state <= 85.0) {
-        return {"Orange"};
-      } else {
-        return {"Red"};
-      }
-
-  - platform: template
-    name: "Particulate Matter 2.5µm Air Quality Dzuriš Home"
-    icon: mdi:emoticon
-    update_interval: 30s
-    lambda: |-
-      if (id(particulate_matter_2_5).state <= 12.0) {
-        return {"Excellent"};
-      } else if (id(particulate_matter_2_5).state > 12.0 && id(particulate_matter_2_5).state <= 35.0) {
-        return {"Good"};
-      } else if (id(particulate_matter_2_5).state > 35.0 && id(particulate_matter_2_5).state <= 55.0) {
-        return {"Moderate"};
-      } else if (id(particulate_matter_2_5).state > 55.0 && id(particulate_matter_2_5).state <= 150.0) {
-        return {"Unhealthy for Sensitive Groups"};
-      } else if (id(particulate_matter_2_5).state > 150.0 && id(particulate_matter_2_5).state <= 250.0) {
-        return {"Unhealthy"};
-      } else if (id(particulate_matter_2_5).state > 250.0 && id(particulate_matter_2_5).state <= 350.0) {
-        return {"Very Unhealthy"};
-      } else {
-        return {"Hazardous"};
-      }
-
-  - platform: template #If you don't have or want Carbon Monoxide, Delete (platform: template and below that)
-    name: "Carbon Monoxide Air Quality Dzuriš Home"
-    icon: mdi:emoticon
-    update_interval: 30s
-    lambda: |-
-      if (id(carbon_monoxide).state <= 50.0) {
-        return {"Excellent"};
-      } else if (id(carbon_monoxide).state > 50.0 && id(carbon_monoxide).state <= 100.0) {
-        return {"Good"};
-      } else if (id(carbon_monoxide).state > 100.0 && id(carbon_monoxide).state <= 200.0) {
-        return {"Moderate"};
-      } else if (id(carbon_monoxide).state > 200.0 && id(carbon_monoxide).state <= 400.0) {
-        return {"Unhealthy for Sensitive Groups"};
-      } else if (id(carbon_monoxide).state > 400.0 && id(carbon_monoxide).state <= 800.0) {
-        return {"Unhealthy"};
-      } else {
-        return {"Very Unhealthy"};
-      }
-
-#Diagnostic
-  - platform: template
-    id: uptime_sensor
-    name: "Air Quality Dzuriš Home Uptime"
-    icon: mdi:clock-time-four-outline
     entity_category: "diagnostic"
+    lambda: |-
+      static std::string last_value = "";
+      std::string new_value;
+
+      if (id(pm2_5).state <= 35.0) {
+        new_value = "Green";
+      } else if (id(pm2_5).state > 35.0 && id(pm2_5).state <= 85.0) {
+        new_value = "Orange";
+      } else {
+        new_value = "Red";
+      }
+
+      if (new_value != last_value) {
+        last_value = new_value;
+        return new_value;
+      } else {
+        return {};
+      }
+
+#Sensor
+  - platform: template
+    update_interval: 1s
+    name: "IKEA VINDRIKTNING Air Quality"
+    icon: mdi:emoticon
+    lambda: |-
+      static std::string last_value = "";
+      std::string new_value;
+
+      if (id(pm2_5).state <= 12.0) {
+        new_value = "Excellent";
+      } else if (id(pm2_5).state > 12.0 && id(pm2_5).state <= 35.0) {
+        new_value = "Good";
+      } else if (id(pm2_5).state > 35.0 && id(pm2_5).state <= 55.0) {
+        new_value = "Moderate";
+      } else if (id(pm2_5).state > 55.0 && id(pm2_5).state <= 150.0) {
+        new_value = "Unhealthy for Sensitive Groups";
+      } else if (id(pm2_5).state > 150.0 && id(pm2_5).state <= 250.0) {
+        new_value = "Unhealthy";
+      } else if (id(pm2_5).state > 250.0 && id(pm2_5).state <= 350.0) {
+        new_value = "Very Unhealthy";
+      } else {
+        new_value = "Hazardous";
+      }
+
+      if (new_value != last_value) {
+        last_value = new_value;
+        return new_value;
+      } else {
+        return {};
+      }
 
 #Configuration
 button:
   - platform: restart
-    name: "Air Quality Dzuriš Home Restart"
+    name: "IKEA VINDRIKTNING Restart"
+    entity_category: "diagnostic"
