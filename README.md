@@ -32,7 +32,7 @@
 > 
 > Tools
 >
-> USB Cable for Flashing
+> USB Cable for Flashing Board
 
 </br>
 
