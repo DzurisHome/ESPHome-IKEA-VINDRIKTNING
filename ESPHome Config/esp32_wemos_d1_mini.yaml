@@ -102,7 +102,7 @@ sensor:
     pm_2_5:
       id: pm2_5
       name: "IKEA VINDRIKTNING PM2.5"
-      filters:
+      filters: #If you don't want Filters, Delete (filters and below that)
         - sliding_window_moving_average:
             window_size: 10
             send_every: 10
