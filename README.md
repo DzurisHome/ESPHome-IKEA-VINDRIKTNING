@@ -82,8 +82,13 @@
 
 </br>
 
+> [!IMPORTANT]
+> Read this before Flashing if you have Single Core Chip and using BLE (Like ESP32 C3 Super Mini) [Use on single-core chips](https://esphome.io/components/esp32_ble_tracker.html#use-on-single-core-chips)
+> 
+> Config for [ESP32 Single Chip BLE](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp32_single_core_ble.yaml)
+
 ### ESPHome Configs
-- [ESP](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp-config.yaml)
+- [Example](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/example.yaml)
 - [ESP32 Wemos D1 Mini](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp32_wemos_d1_mini.yaml)
 - [ESP32 C3 Super Mini](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp32_c3_super_mini.yaml)
 - [ESP8266 Wemos D1 Mini](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp8266_wemos_d1_mini.yaml)
