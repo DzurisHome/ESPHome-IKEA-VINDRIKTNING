@@ -1,0 +1,176 @@
+#ESPHome Core
+esphome:
+  name: ikea-vindriktning-dzuris-home
+  area: Living Room
+
+esp8266:
+  board: d1_mini
+
+#Logger
+logger:
+  baud_rate: 0
+
+#Safe Mode
+safe_mode: #If you don't want Safe Mode, Delete (safe_mode and below that) 
+  boot_is_good_after: 1min
+  reboot_timeout: 5min
+
+#WiFi
+wifi:
+  ssid: #SSID or !secret wifi_ssid
+  password: #Password or !secret wifi_password
+
+  manual_ip: #If you don't want set manual IPs, Delete (manual_ip and below that)
+    static_ip: #IKEA VINDRIKTNING Device IP
+    gateway: #Router IP
+    subnet: #Router Subnet IP
+    dns1: 1.1.1.1 #DNS IP
+
+  ap:
+    ssid: "IKEA VINDRIKTNING Dzuriš Home AP"
+    password: #Acess Point password or !secret ap_password
+
+#WiFi Hotspot
+captive_portal:
+
+#OTA
+ota:
+  - platform: esphome
+    password: #Password or !secret ota_password
+
+#SNTP Time
+time: #If you want to change the time on Home Assistant change it or stay on SNTP but you need change timezone and SNTP server for your Country
+  - platform: sntp
+    timezone: Europe/Bratislava
+    servers:
+     - 1.sk.pool.ntp.org
+     - 0.europe.pool.ntp.org
+     - 1.europe.pool.ntp.org
+
+#Web Server
+web_server: #If you don't want Web Server, Delete (web_server and below that)
+  port: 80
+  auth:
+    username: #Username or !secret web_server_username
+    password: #Password or !secret web_server_password
+  include_internal: false
+  log: true
+  version: 3
+
+#ESPHome API
+api: #If you don't want ESPHome API, Delete (api and below that)
+  encryption:
+    key: #Key or !secret api_encryption_key
+
+#MQTT
+mqtt: #If you don't have or want MQTT Broker, Delete (mqtt and below that)
+  broker: #Broker or !secret mqtt_broker_ip_address
+  username: #Username or !secret mqtt_broker_username
+  password: #Password or !secret mqtt_broker_password
+  client_id: "IKEA VINDRIKTNING Dzuriš Home"
+  discovery: false #If you chnnge to true Home Assistant don't discovery device only from MQTT Integration
+  topic_prefix: "IKEA VINDRIKTNING Dzuriš Home"
+
+#Device Required
+uart:
+  rx_pin: D2
+  baud_rate: 9600
+
+#Device
+binary_sensor: #If you don't have or want FAN, Delete (binary_sensor and below that)
+  - platform: gpio
+    pin:
+      number: D4
+      inverted: true
+    name: "IKEA VINDRIKTNING Fan"
+    entity_category: "diagnostic"
+
+sensor:
+  - platform: pm1006
+    pm_2_5:
+      id: pm2_5
+      name: "IKEA VINDRIKTNING PM2.5"
+      filters: #If you don't want Filters, Delete (filters and below that)
+        - sliding_window_moving_average:
+            window_size: 10
+            send_every: 10
+            send_first_at: 1
+
+#Diagnostic
+  - platform: wifi_signal
+    name: "IKEA VINDRIKTNING RSSI"
+    update_interval: 1min
+    unit_of_measurement: "dBm"
+    device_class: "signal_strength"
+    state_class: "measurement"
+    entity_category: "diagnostic"
+
+  - platform: uptime
+    type: timestamp
+    name: "IKEA VINDRIKTNING Uptime"
+    icon: mdi:clock-time-four-outline
+    device_class: "timestamp"
+    entity_category: "diagnostic"
+
+text_sensor:
+  - platform: template
+    update_interval: 1s
+    name: "IKEA VINDRIKTNING Color"
+    icon: mdi:led-strip
+    entity_category: "diagnostic"
+    lambda: |-
+      static std::string last_value = "";
+      std::string new_value;
+
+      if (id(pm2_5).state <= 35.0) {
+        new_value = "Green";
+      } else if (id(pm2_5).state > 35.0 && id(pm2_5).state <= 85.0) {
+        new_value = "Orange";
+      } else {
+        new_value = "Red";
+      }
+
+      if (new_value != last_value) {
+        last_value = new_value;
+        return new_value;
+      } else {
+        return {};
+      }
+
+#Sensor
+  - platform: template
+    update_interval: 1s
+    name: "IKEA VINDRIKTNING Air Quality"
+    icon: mdi:emoticon
+    lambda: |-
+      static std::string last_value = "";
+      std::string new_value;
+
+      if (id(pm2_5).state <= 12.0) {
+        new_value = "Excellent";
+      } else if (id(pm2_5).state > 12.0 && id(pm2_5).state <= 35.0) {
+        new_value = "Good";
+      } else if (id(pm2_5).state > 35.0 && id(pm2_5).state <= 55.0) {
+        new_value = "Moderate";
+      } else if (id(pm2_5).state > 55.0 && id(pm2_5).state <= 150.0) {
+        new_value = "Unhealthy for Sensitive Groups";
+      } else if (id(pm2_5).state > 150.0 && id(pm2_5).state <= 250.0) {
+        new_value = "Unhealthy";
+      } else if (id(pm2_5).state > 250.0 && id(pm2_5).state <= 350.0) {
+        new_value = "Very Unhealthy";
+      } else {
+        new_value = "Hazardous";
+      }
+
+      if (new_value != last_value) {
+        last_value = new_value;
+        return new_value;
+      } else {
+        return {};
+      }
+
+#Configuration
+button:
+  - platform: restart
+    name: "IKEA VINDRIKTNING Restart"
+    entity_category: "diagnostic"
