@@ -4,7 +4,7 @@ esphome:
   area: Living Room
 
 esp32:
-  board: wemos_d1_mini32
+  board: wemos_d1_mini32 #ESP32 Wemos D1 Mini | https://s.click.aliexpress.com/e/_DFpDpnJ
   framework:
     type: esp-idf
 
