@@ -1,87 +1,6 @@
-#ESPHome Core
-esphome:
-  name: ikea-vindriktning-dzuris-home
-  area: Living Room
-
-esp32:
-  board: esp32-c3-devkitm-1 #if you have another Board change it to yours
-  framework:
-    type: esp-idf
-
 #Logger
 logger:
   baud_rate: 0
-
-#Safe Mode
-safe_mode:
-  boot_is_good_after: 1min
-  reboot_timeout: 5min
-
-#WiFi
-wifi:
-  ssid: #SSID or !secret wifi_ssid
-  password: #Password or !secret wifi_password
-
-  manual_ip: #If you don't want set manual IPs, Delete (manual_ip and below that)
-    static_ip: #IKEA VINDRIKTNING Device IP
-    gateway: #Router IP
-    subnet: #Router Subnet IP
-
-  ap:
-    ssid: "IKEA VINDRIKTNING Dzuriš Home AP"
-    password: #Acess Point password or !secret ap_password
-
-#WiFi Hotspot
-captive_portal:
-
-#OTA
-ota:
-  - platform: esphome
-    password: #Password or !secret ota_password
-
-#SNTP Time
-time: #If you want to change the time on Home Assistant change it or stay on SNTP but you need change timezone and SNTP server for your Country
-  - platform: sntp
-    timezone: Europe/Bratislava
-    servers:
-     - 1.sk.pool.ntp.org
-     - 0.europe.pool.ntp.org
-     - 1.europe.pool.ntp.org
-
-#Web Server
-web_server: #If you don't want Web Server, Delete (web_server and below that) 
-  port: 80
-  auth:
-    username: #Username or !secret web_server_username
-    password: #Password or !secret web_server_password
-  include_internal: false
-  log: true
-  version: 3
-
-#ESPHome API
-api: #If you don't want ESPHome API, Delete (api and below that)
-  encryption:
-    key: #Key or !secret api_encryption_key
-
-#MQTT
-mqtt: #If you don't have or want MQTT Broker, Delete (mqtt and below that)
-  broker: #Broker or !secret mqtt_broker_ip_address
-  username: #Username or !secret mqtt_broker_username
-  password: #Password or !secret mqtt_broker_password
-  client_id: "IKEA VINDRIKTNING Dzuriš Home"
-  discovery: false #If you chnnge to true Home Assistant don't discovery device only from MQTT Integration
-  topic_prefix: "IKEA VINDRIKTNING Dzuriš Home"
-
-#BLE
-esp32_ble_tracker: #If you don't want ESP32 BLE Tracker, Delete (esp32_ble_tracker and below that), ESP32 BLE Tracker only works with ESP32
-  scan_parameters:
-    interval: 320ms
-    window: 30ms
-    active: false
-
-#BLE Proxy
-bluetooth_proxy: #If you don't want Bluetooth Proxy, Delete (bluetooth_proxy and below that), Bluetooth Proxy only works with ESP32
-  active: false
 
 #Device Required
 uart:
@@ -102,36 +21,13 @@ sensor:
     pm_2_5:
       id: pm2_5
       name: "IKEA VINDRIKTNING PM2.5"
-      filters:
+      filters: #If you don't want Filters, Delete (filters and below that)
         - sliding_window_moving_average:
             window_size: 10
             send_every: 10
             send_first_at: 1
 
 #Diagnostic
-  - platform: internal_temperature #If you don't want Internal Temperature, Delete (internal_temperature and below that), Internal Temperature only works with ESP32
-    update_interval: 5min
-    name: "IKEA VINDRIKTNING Internal Temperature"
-    unit_of_measurement: "°C"
-    device_class: "temperature"
-    state_class: "measurement"
-    entity_category: "diagnostic"
-
-  - platform: wifi_signal
-    name: "IKEA VINDRIKTNING RSSI"
-    update_interval: 1min
-    unit_of_measurement: "dBm"
-    device_class: "signal_strength"
-    state_class: "measurement"
-    entity_category: "diagnostic"
-
-  - platform: uptime
-    type: timestamp
-    name: "IKEA VINDRIKTNING Uptime"
-    icon: mdi:clock-time-four-outline
-    device_class: "timestamp"
-    entity_category: "diagnostic"
-
 text_sensor:
   - platform: template
     update_interval: 1s
@@ -188,9 +84,3 @@ text_sensor:
       } else {
         return {};
       }
-
-#Configuration
-button:
-  - platform: restart
-    name: "IKEA VINDRIKTNING Restart"
-    entity_category: "diagnostic"
