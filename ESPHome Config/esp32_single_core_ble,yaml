@@ -1,0 +1,29 @@
+#WiFi
+wifi:
+  ssid: #SSID or !secret wifi_ssid
+  password: #Password or !secret wifi_password
+
+  manual_ip:
+    static_ip: #IKEA VINDRIKTNING Device IP
+    gateway: #Router IP
+    subnet: #Router Subnet IP
+
+  ap:
+    ssid: "IKEA VINDRIKTNING Dzuriš Home AP"
+    password: #Acess Point password or !secret ap_password
+
+  #Required
+  on_connect:
+    - delay: 30s
+    - esp32_ble_tracker.start_scan:
+        continuous: true
+  on_disconnect:
+    - esp32_ble_tracker.stop_scan:
+
+#BLE
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 320ms
+    window: 30ms
+    active: false
+    continuous: false #Required
