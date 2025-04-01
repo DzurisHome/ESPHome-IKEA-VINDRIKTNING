@@ -9,11 +9,11 @@
 ### How to make IKEA VINDRIKTNING Smart
 
 ### Benefits
-- Home Assistant Autodiscovery
-- MQTT
 - Locally
-- WebServer
-- OTA Updates
+- MQTT
+- Home Assistant Autodiscovery
+- Web Server
+- OTA Update
 
 </br>
 
@@ -36,15 +36,15 @@
 
 </br>
 
-![Home Assistant ESPHome Integration Living Room Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/Home%20Assistant%20ESPHome%20Integration%20Living%20Room%20Air%20Quality.png)
-![ESPHome WebServer Living Room Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/ESPHome%20WebServer%20Living%20Room%20Air%20Quality.png)
+![Home Assistant ESPHome Bedroom Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/Home%20Assistant%20ESPHome%20Bedroom%20Air%20Quality.png)
+![ESPHome WebServer Bedroom Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/ESPHome%20WebServer%20Bedroom%20Air%20Quality.png)
 
 </br>
 
 > [!CAUTION]
 > ### Recommendations
 >
-> Boards [ESP8266 Wemos D1 Mini](https://s.click.aliexpress.com/e/_Dm8FxHL), [XIAO ESP32-C3](https://s.click.aliexpress.com/e/_Dd9y9cz), [ESP32 Wemos D1 Mini](https://s.click.aliexpress.com/e/_DFpDpnJ) or [ESP32 C3 SuperMini](https://s.click.aliexpress.com/e/_DlP529f)
+> Boards [XIAO ESP32-C3](https://s.click.aliexpress.com/e/_Dd9y9cz), [ESP32 Wemos D1 Mini](https://s.click.aliexpress.com/e/_DFpDpnJ), [ESP32 C3 Super Mini](https://s.click.aliexpress.com/e/_DlP529f) or [ESP8266 Wemos D1 Mini](https://s.click.aliexpress.com/e/_Dm8FxHL)
 > 
 > Cables [Dupont Line](https://s.click.aliexpress.com/e/_DFdLicl)
 >
@@ -59,11 +59,6 @@
 |--------------|----------------------------------|
 | 🔴 +5V       | 5 Voltage                        |
 | ⚫ GND       | Ground                           |
-
-| VINDRIKTNING | ESP8266 Wemos D1 Mini |
-|--------------|-----------------------|
-| 🟡 REST      | D2                    |
-| 🟢 FAN-      | D4                    |
 
 | VINDRIKTNING | ESP32 Wemos D1 Mini |
 |--------------|---------------------|
@@ -80,20 +75,19 @@
 | 🟡 REST      | GPIO8              |
 | 🟢 FAN-      | GPIO3              |
 
-</br>
-
-</br>
-
-![IKEA VINDRIKTNING 0.1](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.1.jpg)
-![IKEA VINDRIKTNING 0.2](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.2.png)
-![IKEA VINDRIKTNING 0.3](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.3.png)
-![IKEA VINDRIKTNING 0.4](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.4.png)
+| VINDRIKTNING | ESP8266 Wemos D1 Mini |
+|--------------|-----------------------|
+| 🟡 REST      | D2                    |
+| 🟢 FAN-      | D4                    |
 
 </br>
 
 ### ESPHome Configs
 - [ESP](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp-config.yaml)
-- RP2040 SOON
+- [ESP32 Wemos D1 Mini](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp32_wemos_d1_mini.yaml)
+- [ESP32 C3 Super Mini](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp32_c3_super_mini.yaml)
+- [ESP8266 Wemos D1 Mini](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp8266_wemos_d1_mini.yaml)
+- RP2040 SOON Maybe
 
 ### ESPHome Firmwares
 - SOON
