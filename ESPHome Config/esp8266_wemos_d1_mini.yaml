@@ -4,7 +4,7 @@ esphome:
   area: Living Room
 
 esp8266:
-  board: d1_mini
+  board: d1_mini #ESP8266 Wemos D1 Mini | https://s.click.aliexpress.com/e/_Dm8FxHL
 
 #Logger
 logger:
