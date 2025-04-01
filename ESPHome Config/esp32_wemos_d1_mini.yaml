@@ -3,8 +3,10 @@ esphome:
   name: ikea-vindriktning-dzuris-home
   area: Living Room
 
-esp8266:
-  board: d1_mini
+esp32:
+  board: wemos_d1_mini32
+  framework:
+    type: esp-idf
 
 #Logger
 logger:
