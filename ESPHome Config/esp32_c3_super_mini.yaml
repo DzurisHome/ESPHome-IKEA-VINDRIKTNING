@@ -4,7 +4,7 @@ esphome:
   area: Living Room
 
 esp32:
-  board: esp32-c3-devkitm-1
+  board: esp32-c3-devkitm-1 #ESP32 C3 Super Mini | https://s.click.aliexpress.com/e/_DlP529f
   framework:
     type: esp-idf
     sdkconfig_options: #If you don't use ESP32 BLE Tracker nad Bluetooth Proxy, Delete (sdkconfig_options and below that)
