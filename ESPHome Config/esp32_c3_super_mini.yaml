@@ -1,5 +1,5 @@
 #ESPHome Core
-esphome:ak
+esphome:
   name: ikea-vindriktning-dzuris-home
   area: Living Room
 
@@ -7,7 +7,7 @@ esp32:
   board: esp32-c3-devkitm-1
   framework:
     type: esp-idf
-    sdkconfig_options:
+    sdkconfig_options: #If you don't use ESP32 BLE Tracker nad Bluetooth Proxy, Delete (sdkconfig_options and below that)
       CONFIG_BT_BLE_ENABLED: y
       CONFIG_BTDM_CTRL_MODE_BLE_ONLY: y
       CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY: y
