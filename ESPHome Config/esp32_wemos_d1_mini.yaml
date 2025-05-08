@@ -77,11 +77,16 @@ esp32_ble_tracker: #If you don't want ESP32 BLE Tracker, Delete (esp32_ble_track
   scan_parameters:
     interval: 320ms
     window: 30ms
+    duration: 5min
     active: false
+    continuous: true
+  max_connections: 5
 
 #BLE Proxy
 bluetooth_proxy: #If you don't want Bluetooth Proxy, Delete (bluetooth_proxy and below that)
   active: false
+  cache_services: true
+  connection_slots: 5
 
 #Device Required
 uart:
