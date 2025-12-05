@@ -2,15 +2,15 @@
 wifi:
   ssid: #SSID or !secret wifi_ssid
   password: #Password or !secret wifi_password
-
   manual_ip:
     static_ip: #IKEA VINDRIKTNING Device IP
     gateway: #Router IP
     subnet: #Router Subnet IP
-
   ap:
     ssid: "IKEA VINDRIKTNING Dzuriš Home AP"
     password: #Acess Point password or !secret ap_password
+  reboot_timeout: 15min
+  min_auth_mode: WPA2
 
   #Required
   on_connect:
