@@ -1,7 +1,11 @@
 #ESPHome Core
 esphome:
-  name: ikea-vindriktning-dzuris-home
-  area: Living Room
+  name: ikea-vindriktning
+  area: Living Room #Change to your Room
+  name_add_mac_suffix: true
+  project: 
+    name: "Dzuriš Home.Air Quality"
+    version: "Dzuriš Home ESPHome"
 
 esp32:
   board: esp32-c3-devkitm-1 #ESP32 C3 Super Mini | https://s.click.aliexpress.com/e/_DlP529f
@@ -27,15 +31,15 @@ safe_mode: #If you don't want Safe Mode, Delete (safe_mode and below that)
 wifi:
   ssid: #SSID or !secret wifi_ssid
   password: #Password or !secret wifi_password
-
   manual_ip: #If you don't want set manual IPs, Delete (manual_ip and below that)
     static_ip: #IKEA VINDRIKTNING Device IP
     gateway: #Router IP
     subnet: #Router Subnet IP
-
   ap:
     ssid: "IKEA VINDRIKTNING Dzuriš Home AP"
     password: #Acess Point password or !secret ap_password
+  reboot_timeout: 15min
+  min_auth_mode: WPA2
 
   on_connect:
     - delay: 30s
@@ -46,6 +50,10 @@ wifi:
 
 #WiFi Hotspot
 captive_portal:
+
+#mDNS
+mdns:
+  disabled: false
 
 #OTA
 ota:
@@ -81,9 +89,10 @@ mqtt: #If you don't have or want MQTT Broker, Delete (mqtt and below that)
   broker: #Broker or !secret mqtt_broker_ip_address
   username: #Username or !secret mqtt_broker_username
   password: #Password or !secret mqtt_broker_password
-  client_id: "IKEA VINDRIKTNING Dzuriš Home"
+  client_id: "IKEA VINDRIKTNING"
+  topic_prefix: "IKEA VINDRIKTNING"
   discovery: false #If you chnnge to true Home Assistant don't discovery device only from MQTT Integration
-  topic_prefix: "IKEA VINDRIKTNING Dzuriš Home"
+  discover_ip: false #If you chnnge to true Home Assistant don't discovery device only from MQTT Integration
 
 #BLE
 esp32_ble_tracker: #If you don't want ESP32 BLE Tracker, Delete (esp32_ble_tracker and below that)
