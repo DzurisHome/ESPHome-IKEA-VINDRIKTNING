@@ -32,7 +32,9 @@ wifi:
   ap:
     ssid: "IKEA VINDRIKTNING Dzuriš Home AP"
     password: #Acess Point password or !secret ap_password
+    ap_timeout: 10min
   reboot_timeout: 15min
+  power_save_mode: none
   min_auth_mode: WPA2
 
 #WiFi Hotspot
@@ -82,14 +84,15 @@ mqtt: #If you don't have or want MQTT Broker, Delete (mqtt and below that)
   discover_ip: false #If you chnnge to true Home Assistant don't discovery device only from MQTT Integration
 
 #BLE
-esp32_ble_tracker: #If you don't want ESP32 BLE Tracker, Delete (esp32_ble_tracker and below that)
-  scan_parameters:
-    interval: 320ms
-    window: 30ms
-    duration: 5min
-    active: false
-    continuous: true
+esp32_ble: #If you don't want ESP32 BLE, Delete (esp32_ble and below that)
+  io_capability: keyboard_only
+  enable_on_boot: true
+  name: "IKEA VINDRIKTNING"
+  disable_bt_logs: false
+  connection_timeout: 20s
+  advertising: false
   max_connections: 5
+  max_notifications: 64
 
 #BLE Proxy
 bluetooth_proxy: #If you don't want Bluetooth Proxy, Delete (bluetooth_proxy and below that)
