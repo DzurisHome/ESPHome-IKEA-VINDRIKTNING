@@ -8,6 +8,7 @@ esphome:
     version: "Dzuriš Home ESPHome"
 
 esp32:
+  variant: esp32
   board: esp32-c3-devkitm-1 #ESP32 C3 Super Mini | https://s.click.aliexpress.com/e/_DlP529f
   framework:
     type: esp-idf
