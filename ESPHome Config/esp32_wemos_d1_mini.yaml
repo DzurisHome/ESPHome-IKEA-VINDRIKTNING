@@ -12,6 +12,10 @@ esp32:
   board: wemos_d1_mini32 #ESP32 Wemos D1 Mini | https://s.click.aliexpress.com/e/_DFpDpnJ
   framework:
     type: esp-idf
+    version: recommended
+    advanced:
+      compiler_optimization: SIZE
+      enable_ota_rollback: true
 
 #Logger
 logger:
@@ -33,10 +37,9 @@ wifi:
   ap:
     ssid: "IKEA VINDRIKTNING Dzuriš Home AP"
     password: #Acess Point password or !secret ap_password
-    ap_timeout: 10min
+    ap_timeout: 6min
   reboot_timeout: 15min
   power_save_mode: none
-  min_auth_mode: WPA2
 
 #WiFi Hotspot
 captive_portal:
