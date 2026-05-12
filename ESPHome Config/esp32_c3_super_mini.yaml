@@ -12,6 +12,10 @@ esp32:
   board: esp32-c3-devkitm-1 #ESP32 C3 Super Mini | https://s.click.aliexpress.com/e/_DlP529f
   framework:
     type: esp-idf
+    version: recommended
+    advanced:
+      compiler_optimization: SIZE
+      enable_ota_rollback: true
     sdkconfig_options: #If you don't use ESP32 BLE Tracker nad Bluetooth Proxy, Delete (sdkconfig_options and below that)
       CONFIG_BT_BLE_ENABLED: y
       CONFIG_BTDM_CTRL_MODE_BLE_ONLY: y
@@ -39,10 +43,9 @@ wifi:
   ap:
     ssid: "IKEA VINDRIKTNING Dzuriš Home AP"
     password: #Acess Point password or !secret ap_password
-    ap_timeout: 10min
+    ap_timeout: 6min
   reboot_timeout: 15min
   power_save_mode: none
-  min_auth_mode: WPA2
 
 #WiFi Hotspot
 captive_portal:
