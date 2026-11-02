@@ -91,7 +91,7 @@ mqtt: #If you don't have or want MQTT Broker, Delete (mqtt and below that)
 esp32_ble: #If you don't want ESP32 BLE, Delete (esp32_ble and below that)
   io_capability: keyboard_only
   enable_on_boot: true
-  name: "IKEA VINDRIKTNING"
+  name: "VINDRIKTNING"
   disable_bt_logs: true
   connection_timeout: 20s
   advertising: false
