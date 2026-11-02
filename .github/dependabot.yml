@@ -1,5 +1,5 @@
 #Dependabot
-#Raz mesačne (1. deň v mesiaci, 16:00) skontroluje použité GitHub Actions a Python balíčky.
+#Raz mesačne (1. deň v mesiaci, 16:00) skontroluje všetky GitHub Actions vo workflowoch a Python balíčky.
 #Keď je nová verzia → PR v tomto repe, priradený tebe. Merge = aktualizované.
 version: 2
 updates:

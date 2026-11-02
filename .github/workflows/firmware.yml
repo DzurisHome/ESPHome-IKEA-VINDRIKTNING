@@ -1,18 +1,16 @@
 #Firmware
-#Pull request: skompiluje firmware pre každú dosku → v PR uvidíš ✅/❌ ešte pred Merge
-#Merge do main: skompiluje firmware a zverejní webovú stránku s tlačidlom Install
-#Dosky sa nájdu automaticky (každý .yaml v ESPHome Config, ktorý má esphome:)
+#Nový firmware + webová stránka s tlačidlom Install. Spustí sa:
+#- po Merge PR alebo tvojom commite do main (zmena v ESPHome Config)
+#- keď vyjde nová verzia ESPHome (spustí ho .github/workflows/esphome-release.yml)
+#- ručne (Run workflow)
+#
+#Najprv Validate. Pri CHYBE sa firmware nerobí, na stránke ostane starý
+#a otvorí sa Issue s textom chyby (zamknuté, verejnosť nemôže komentovať).
+#Varovania build nezastavia. Po úspešnom builde sa Issue samo zavrie.
 #Verejné YAML sa nemenia; firmware sa robí z dočasnej kópie (.github/firmware/firmware.py)
 name: Firmware
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "ESPHome Config/**"
-      - ".github/firmware/**"
-      - ".github/workflows/firmware.yml"
   push:
     branches:
       - main
@@ -20,25 +18,44 @@ on:
       - "ESPHome Config/**"
       - ".github/firmware/**"
       - ".github/workflows/firmware.yml"
-  #Ručné spustenie (tlačidlo Run workflow)
+  #Ručne alebo z ESPHome Release
   workflow_dispatch:
 
 permissions: {}
 
 concurrency:
-  group: firmware-${{ github.ref }}
-  cancel-in-progress: true
+  group: firmware
+  cancel-in-progress: false
 
 env:
   CONFIG_DIR: ESPHome Config
-  SITE_TITLE: IKEA VINDRIKTNING Firmware
+  SITE_TITLE: Dzuriš Home IKEA VINDRIKTNING Firmware
+  REVIEWER: milandzuris
+  ISSUE_LABEL: Firmware
 
 jobs:
-  #Kópie pre firmware + zoznam dosiek
-  prepare:
-    name: Prepare
+  #Najnovšia verzia ESPHome (rovnaká pre Validate aj Build)
+  check:
+    name: ESPHome version
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions: {}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: ESPHome version
+        id: version
+        run: |
+          latest="$(curl --fail --silent --show-error https://pypi.org/pypi/esphome/json | jq -r '.info.version')"
+          echo "version=${latest}" >> "${GITHUB_OUTPUT}"
+          echo "ESPHome: ${latest}"
+
+  #Kópie pre firmware + Validate
+  prepare:
+    name: Validate
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: read
     outputs:
@@ -55,7 +72,12 @@ jobs:
           python-version: "3.13"
 
       - name: Python packages
-        run: python -m pip install --quiet --requirement .github/firmware/requirements.txt
+        env:
+          ESPHOME_VERSION: ${{ needs.check.outputs.version }}
+        run: |
+          python -m pip install --quiet \
+            --requirement .github/firmware/requirements.txt \
+            "esphome==${ESPHOME_VERSION}"
 
       - name: Prepare
         id: prepare
@@ -65,6 +87,39 @@ jobs:
             --out build \
             --matrix "${RUNNER_TEMP}/boards.json"
           echo "boards=$(cat "${RUNNER_TEMP}/boards.json")" >> "${GITHUB_OUTPUT}"
+
+      - name: Validate
+        id: validate
+        env:
+          ESPHOME_VERSION: ${{ needs.check.outputs.version }}
+        run: |
+          python .github/firmware/firmware.py validate \
+            --build build \
+            --ignore .github/firmware/ignore-warnings.txt \
+            --esphome-version "${ESPHOME_VERSION}" \
+            --report report.md \
+            --status status.txt
+          cat report.md >> "${GITHUB_STEP_SUMMARY}"
+
+      #Report pre Issue (aj pri chybe)
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: report
+          path: |
+            report.md
+            status.txt
+          if-no-files-found: ignore
+          retention-days: 7
+
+      #Chyba = stop, firmware sa nerobí
+      - name: Result
+        run: |
+          if [ "$(cat status.txt)" = "errors" ]; then
+            echo "::error::Validation failed. Firmware was not built, the previous firmware stays online."
+            exit 1
+          fi
 
       - name: Upload build configs
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -76,7 +131,9 @@ jobs:
   #Kompilácia (každá doska zvlášť, paralelne)
   build:
     name: Build ${{ matrix.board }}
-    needs: prepare
+    needs:
+      - check
+      - prepare
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -97,6 +154,7 @@ jobs:
         uses: esphome/build-action@ae5408cdbc4f70692bf8e345c4982bca05a93667 # v8.1.0
         with:
           yaml-file: build/${{ matrix.board }}.yaml
+          version: ${{ needs.check.outputs.version }}
           complete-manifest: true
 
       - name: Collect
@@ -115,11 +173,12 @@ jobs:
           path: firmware
           retention-days: 7
 
-  #Webová stránka s tlačidlom Install (iba po Merge do main)
+  #Webová stránka (iba keď sa podarili VŠETKY dosky)
   publish:
     name: Publish
-    if: github.event_name != 'pull_request'
-    needs: build
+    needs:
+      - check
+      - build
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -160,12 +219,14 @@ jobs:
       - name: Site
         env:
           YAML_URL: ${{ github.server_url }}/${{ github.repository }}/tree/main/ESPHome%20Config
+          ESPHOME_VERSION: ${{ needs.check.outputs.version }}
         run: |
           python .github/firmware/firmware.py site \
             --boards build/boards.json \
             --site site \
             --title "${SITE_TITLE}" \
-            --yaml-url "${YAML_URL}"
+            --yaml-url "${YAML_URL}" \
+            --esphome-version "${ESPHOME_VERSION}"
 
       - name: Configure Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
@@ -178,3 +239,62 @@ jobs:
       - name: Deploy
         id: deploy
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  #Issue pri probléme / zavretie po úspechu
+  report:
+    name: Report
+    needs:
+      - check
+      - prepare
+      - build
+      - publish
+    if: always() && needs.check.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: .github/shared
+          persist-credentials: false
+
+      - name: Download report
+        if: needs.prepare.result == 'failure'
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: report
+          path: report
+
+      - name: Issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREPARE: ${{ needs.prepare.result }}
+          BUILD: ${{ needs.build.result }}
+          PUBLISH: ${{ needs.publish.result }}
+          ESPHOME_VERSION: ${{ needs.check.outputs.version }}
+        run: |
+          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          if [ "${PREPARE}" = "success" ] && [ "${BUILD}" = "success" ] && [ "${PUBLISH}" = "success" ]; then
+            bash .github/shared/report-issue.sh "${ISSUE_LABEL}" "" ok
+            exit 0
+          fi
+          {
+            if [ "${PREPARE}" = "failure" ] && [ -f report/report.md ]; then
+              echo "**Firmware was not built: validation failed.** The previous firmware stays online."
+              echo
+              cat report/report.md
+            elif [ "${PREPARE}" != "success" ]; then
+              echo "**Firmware was not built: validation could not run.** The previous firmware stays online."
+            elif [ "${BUILD}" != "success" ]; then
+              echo "**Firmware was not built: compilation failed** (ESPHome \`${ESPHOME_VERSION}\`). The previous firmware stays online."
+            else
+              echo "**Firmware was built, but the website could not be published.** The previous firmware stays online."
+            fi
+            echo
+            echo "Run: ${run_url}"
+          } > "${RUNNER_TEMP}/issue.md"
+          bash .github/shared/report-issue.sh "${ISSUE_LABEL}" "Firmware not built" problem "${RUNNER_TEMP}/issue.md"

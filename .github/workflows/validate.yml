@@ -1,0 +1,119 @@
+#Validate
+#Každý PR so zmenou v ESPHome Config (napr. od ESPHome Config Sync z private repa):
+#- skontroluje všetky dosky najnovším ESPHome (rovnaké kópie, z ktorých sa robí firmware)
+#- výsledok napíše do PR (chyby aj varovania) a nastaví ✅/❌
+#- ❌ iba pri chybe, varovania nevadia
+#- PR od bota sa zamkne → komentovať môžu iba správcovia repa
+#Firmware sa tu NEROBÍ, iba po Merge (.github/workflows/firmware.yml)
+name: Validate
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "ESPHome Config/**"
+      - ".github/firmware/**"
+      - ".github/workflows/validate.yml"
+
+permissions: {}
+
+concurrency:
+  group: validate-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  CONFIG_DIR: ESPHome Config
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+
+      #Najnovší ESPHome
+      - name: ESPHome version
+        id: esphome
+        run: |
+          version="$(curl --fail --silent --show-error https://pypi.org/pypi/esphome/json | jq -r '.info.version')"
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+          echo "ESPHome ${version}"
+
+      - name: Python packages
+        env:
+          ESPHOME_VERSION: ${{ steps.esphome.outputs.version }}
+        run: |
+          python -m pip install --quiet \
+            --requirement .github/firmware/requirements.txt \
+            "esphome==${ESPHOME_VERSION}"
+
+      - name: Prepare
+        run: |
+          python .github/firmware/firmware.py prepare \
+            --config-dir "${CONFIG_DIR}" \
+            --out build
+
+      - name: Validate
+        id: validate
+        env:
+          ESPHOME_VERSION: ${{ steps.esphome.outputs.version }}
+        run: |
+          python .github/firmware/firmware.py validate \
+            --build build \
+            --ignore .github/firmware/ignore-warnings.txt \
+            --esphome-version "${ESPHOME_VERSION}" \
+            --report "${RUNNER_TEMP}/report.md" \
+            --status "${RUNNER_TEMP}/status.txt"
+          echo "status=$(cat "${RUNNER_TEMP}/status.txt")" >> "${GITHUB_OUTPUT}"
+          cat "${RUNNER_TEMP}/report.md" >> "${GITHUB_STEP_SUMMARY}"
+
+      #Výsledok do PR (iba PR z tohto repa, nie z cudzích forkov)
+      - name: Comment
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr comment "${PR_NUMBER}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --body-file "${RUNNER_TEMP}/report.md" \
+            --edit-last \
+            --create-if-none
+
+      #PR od bota zamknúť (verejnosť nemôže komentovať)
+      - name: Lock
+        if: github.event.pull_request.user.type == 'Bot' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          LOCKED: ${{ github.event.pull_request.locked }}
+        run: |
+          if [ "${LOCKED}" != "true" ]; then
+            gh api --method PUT "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/lock" -f lock_reason=resolved > /dev/null
+            echo "PR #${PR_NUMBER} locked."
+          fi
+
+      #❌ iba pri chybe (varovania nevadia)
+      - name: Result
+        env:
+          STATUS: ${{ steps.validate.outputs.status }}
+        run: |
+          if [ "${STATUS}" = "errors" ]; then
+            echo "::error::Validation failed. See the comment in this pull request."
+            exit 1
+          fi
+          echo "Validation: ${STATUS}"

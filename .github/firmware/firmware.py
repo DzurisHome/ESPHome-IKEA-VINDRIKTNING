@@ -4,6 +4,7 @@
 # prepare: z verejných YAML (ESPHome Config) vytvorí dočasné kópie pre firmware
 #          na stiahnutie — bez hesiel, bez MQTT, bez statickej IP, Wi-Fi sa
 #          nastaví po nahratí (Improv cez USB alebo hotspot zariadenia)
+# validate: skontroluje kópie cez `esphome config` → report (chyby + varovania)
 # site:    vytvorí webovú stránku s tlačidlom Install (ESP Web Tools)
 #
 # Verejné YAML sa NIKDY nemenia, kópie existujú iba počas buildu.
@@ -14,7 +15,9 @@
 import argparse
 import html
 import json
+import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -24,6 +27,9 @@ from ruamel.yaml.comments import CommentedMap, CommentedSeq
 BOARD_NAME_RE = re.compile(r"^\s*board:\s*\S+\s*#\s*([^|]+)", re.MULTILINE)
 ESP_WEB_TOOLS = "https://unpkg.com/esp-web-tools@10.4.0/dist/web/install-button.js?module"
 LOGGER_BAUD_RATE = 115200
+LOGO_URL = "https://github.com/DzurisHome.png?size=160"
+WARNING_RE = re.compile(r"\bWARNING\b")
+ANSI_RE = re.compile(r"\x1b\[[0-9;]*m")
 
 
 def yaml_rt():
@@ -192,6 +198,70 @@ def cmd_prepare(args):
 
 
 # ------------------------------------------------------------------------------
+# validate
+# ------------------------------------------------------------------------------
+def cmd_validate(args):
+    build = Path(args.build)
+    boards = json.loads((build / "boards.json").read_text(encoding="utf-8"))
+    ignore = []
+    if args.ignore and Path(args.ignore).is_file():
+        ignore = [
+            l.strip() for l in Path(args.ignore).read_text(encoding="utf-8").splitlines()
+            if l.strip() and not l.lstrip().startswith("#")
+        ]
+
+    results = []
+    for b in boards:
+        name = f"{b['id']}.yaml"
+        proc = subprocess.run(
+            ["esphome", "config", name],
+            cwd=build, capture_output=True, text=True,
+            env={**os.environ, "NO_COLOR": "1"},
+        )
+        out = ANSI_RE.sub("", proc.stdout + proc.stderr).splitlines()
+        warnings = list(dict.fromkeys(
+            l.strip() for l in out
+            if WARNING_RE.search(l) and not any(i in l for i in ignore)
+        ))
+        errors = []
+        if proc.returncode != 0:
+            start = next((i for i, l in enumerate(out) if "Failed config" in l), None)
+            if start is not None:
+                errors = [l.rstrip() for l in out[start:] if l.strip() and not l.startswith("INFO")][:60]
+            else:
+                errors = [l.rstrip() for l in out if "ERROR" in l][:30] or out[-20:]
+        results.append((b, errors, warnings))
+        state = "ERROR" if errors else ("WARNING" if warnings else "OK")
+        print(f"{state:8} {name}")
+
+    n_err = sum(1 for _, e, _ in results if e)
+    n_warn = sum(1 for _, e, w in results if w and not e)
+    status = "errors" if n_err else ("warnings" if n_warn else "ok")
+
+    head = {
+        "errors": "### ❌ Validation failed",
+        "warnings": "### ✅ Validation passed with warnings",
+        "ok": "### ✅ Validation passed",
+    }[status]
+    lines = [head, "", f"ESPHome `{args.esphome_version}`", "", "| Board | File | Result |", "|---|---|---|"]
+    for b, errors, warnings in results:
+        result = "❌ Error" if errors else ("⚠️ Warning" if warnings else "✅ OK")
+        lines.append(f"| {b['name']} | `{b['id']}.yaml` | {result} |")
+    for b, errors, warnings in results:
+        if not errors and not warnings:
+            continue
+        lines += ["", f"#### {b['name']} (`{b['id']}.yaml`)", ""]
+        if errors:
+            lines += ["**Errors**", "", "```"] + errors + ["```", ""]
+        if warnings:
+            lines += ["**Warnings**", "", "```"] + warnings + ["```", ""]
+    Path(args.report).write_text("\n".join(lines) + "\n", encoding="utf-8")
+    Path(args.status).write_text(status, encoding="utf-8")
+    print(f"Result: {status}")
+    return 0
+
+
+# ------------------------------------------------------------------------------
 # site
 # ------------------------------------------------------------------------------
 PAGE = """<!doctype html>
@@ -200,6 +270,7 @@ PAGE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
+<link rel="icon" href="{logo}">
 <script type="module" src="{ewt}"></script>
 <style>
 :root {{ color-scheme: light dark; --bg:#f6f7f9; --card:#fff; --text:#1d2329; --muted:#5b6670; --line:#dde2e7; --ok:#1a7f37; --no:#b42318; --accent:#03a9f4; }}
@@ -207,8 +278,10 @@ PAGE = """<!doctype html>
 * {{ box-sizing: border-box; }}
 body {{ margin:0; font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); }}
 main {{ max-width:760px; margin:0 auto; padding:32px 16px 48px; }}
-h1 {{ font-size:1.6rem; margin:0 0 4px; }}
-.sub {{ color:var(--muted); margin:0 0 24px; }}
+header {{ display:flex; align-items:center; gap:16px; margin:0 0 24px; }}
+header img {{ width:64px; height:64px; border-radius:14px; flex:none; }}
+h1 {{ font-size:1.6rem; line-height:1.25; margin:0 0 4px; }}
+.sub {{ color:var(--muted); margin:0; }}
 .card {{ background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px; margin-bottom:16px; }}
 h2 {{ font-size:1.05rem; margin:0 0 12px; }}
 select {{ width:100%; font:inherit; padding:10px; border-radius:8px; border:1px solid var(--line); background:var(--bg); color:var(--text); }}
@@ -217,22 +290,32 @@ ul.list {{ list-style:none; margin:0; padding:0; display:grid; grid-template-col
 .ok::before {{ content:"✓ "; color:var(--ok); font-weight:700; }}
 .no::before {{ content:"✕ "; color:var(--no); font-weight:700; }}
 .install {{ margin-top:16px; }}
+.install button {{ font:inherit; font-weight:600; padding:10px 22px; border:0; border-radius:8px; background:var(--accent); color:#fff; cursor:pointer; }}
 .note {{ color:var(--muted); font-size:.9rem; margin:12px 0 0; }}
 a {{ color:var(--accent); }}
 </style>
 </head>
 <body>
 <main>
-  <h1>{title}</h1>
-  <p class="sub">Ready-made ESPHome firmware · ESPHome {version}</p>
+  <header>
+    <img src="{logo}" alt="Dzuriš Home">
+    <div>
+      <h1>{title}</h1>
+      <p class="sub">Ready-made ESPHome firmware · ESPHome {version}</p>
+    </div>
+  </header>
 
   <div class="card">
     <h2>1. Select your board</h2>
     <select id="board">{options}</select>
     <div class="install">
-      <esp-web-install-button id="button" manifest="{first_manifest}"></esp-web-install-button>
+      <esp-web-install-button id="button" manifest="{first_manifest}">
+        <button slot="activate">Install</button>
+        <span slot="unsupported">Your browser does not support installing firmware. Use Chrome or Edge.</span>
+        <span slot="not-allowed">Installing firmware needs a secure (https) connection.</span>
+      </esp-web-install-button>
     </div>
-    <p class="note">Connect the board with a USB cable and click Install. Works in Chrome and Edge on desktop.</p>
+    <p class="note">Select your board, connect it with a USB cable and click Install.</p>
   </div>
 
   <div class="card">
@@ -287,14 +370,14 @@ def cmd_site(args):
         if b not in built:
             print(f"::warning::Firmware missing for: {b['id']}")
 
-    manifest = json.loads((site / "firmware" / built[0]["id"] / "manifest.json").read_text(encoding="utf-8"))
     options = "".join(
         f'<option value="{html.escape(b["id"])}">{html.escape(b["name"])}</option>' for b in built
     )
     page = PAGE.format(
         title=html.escape(args.title),
         ewt=ESP_WEB_TOOLS,
-        version=html.escape(str(args.esphome_version or manifest.get("version", ""))),
+        logo=LOGO_URL,
+        version=html.escape(str(args.esphome_version)),
         options=options,
         first_manifest=f"firmware/{built[0]['id']}/manifest.json",
         ap=html.escape(built[0].get("ap") or "the device hotspot"),
@@ -302,6 +385,7 @@ def cmd_site(args):
         boards_json=json.dumps(built).replace("</", "<\\/"),
     )
     (site / "index.html").write_text(page, encoding="utf-8")
+    (site / "version.json").write_text(json.dumps({"esphome": args.esphome_version}), encoding="utf-8")
     print(f"Site: {len(built)} board(s)")
     return 0
 
@@ -320,10 +404,17 @@ def main():
     s.add_argument("--site", required=True)
     s.add_argument("--title", required=True)
     s.add_argument("--yaml-url", required=True)
-    s.add_argument("--esphome-version")
+    s.add_argument("--esphome-version", required=True)
+
+    v = sub.add_parser("validate")
+    v.add_argument("--build", required=True)
+    v.add_argument("--report", required=True)
+    v.add_argument("--status", required=True)
+    v.add_argument("--esphome-version", required=True)
+    v.add_argument("--ignore", help="File with warning substrings to ignore, one per line")
 
     args = ap.parse_args()
-    return cmd_prepare(args) if args.cmd == "prepare" else cmd_site(args)
+    return {"prepare": cmd_prepare, "validate": cmd_validate, "site": cmd_site}[args.cmd](args)
 
 
 if __name__ == "__main__":

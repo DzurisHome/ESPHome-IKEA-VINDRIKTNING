@@ -1,0 +1,52 @@
+#ESPHome Release
+#Každý pondelok o 16:00 pozrie, či vyšla nová verzia ESPHome.
+#Ak je novšia ako firmware na stránke → spustí Firmware (Validate → Build → stránka).
+#Samostatný workflow: ak ho GitHub vypne (60 dní bez zmien v public repe),
+#Validate aj Firmware po Merge fungujú ďalej. Zapnutie: Actions → ESPHome Release → Enable workflow.
+name: ESPHome Release
+
+on:
+  #Každý pondelok 16:00 slovenského času
+  schedule:
+    - cron: "0 16 * * 1"
+      timezone: "Europe/Bratislava"
+  #Ručné spustenie (tlačidlo Run workflow)
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: esphome-release
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - name: Compare versions
+        id: compare
+        env:
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+        run: |
+          latest="$(curl --fail --silent --show-error https://pypi.org/pypi/esphome/json | jq -r '.info.version')"
+          deployed="$(curl --silent "https://${OWNER,,}.github.io/${REPO}/version.json" | jq -r '.esphome // empty' 2> /dev/null || true)"
+          echo "Latest ESPHome:   ${latest}"
+          echo "Firmware on site: ${deployed:-none}"
+          if [ "${latest}" = "${deployed}" ]; then
+            echo "Firmware is up to date."
+            echo "new=false" >> "${GITHUB_OUTPUT}"
+          else
+            echo "New ESPHome version."
+            echo "new=true" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Start Firmware
+        if: steps.compare.outputs.new == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run firmware.yml --repo "${GITHUB_REPOSITORY}" --ref main
