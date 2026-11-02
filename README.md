@@ -1,5 +1,7 @@
 # ESPHome IKEA VINDRIKTNING
 
+[![Install Firmware](https://img.shields.io/badge/Install_Firmware-ESPHome-03A9F4?style=for-the-badge&logo=esphome&logoColor=white)](https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/)
+
 ## [LinkTree](https://linktr.ee/DzurisHome)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/DzurisHome)
@@ -14,13 +16,14 @@
 - Home Assistant Autodiscovery
 - Web Server
 - OTA Update
+- Ready-made Firmware
 
 </br>
 
 > [!NOTE]
 > ### Whats need
 > 
-> ESPHome or Download [Firmware](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/README.md#esphome-firmwares)
+> ESPHome or Install Ready-made [Firmware](https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/)
 > 
 > ESP Board with 5V or Step-Down Converter for ESP Board with 3V
 > 
@@ -48,7 +51,7 @@
 > 
 > Cables [Dupont Line](https://s.click.aliexpress.com/e/_DFdLicl)
 >
-> [ESPHome Web Flasher](https://web.esphome.io/) for Flashing ESP Board
+> [Dzuriš Home Firmware Installer](https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/) or [ESPHome Web Flasher](https://web.esphome.io/) for Flashing ESP Board
 
 </br>
 
@@ -95,7 +98,9 @@
 - RP2040 SOON Maybe
 
 ### ESPHome Firmwares
-- SOON
+[![Install Firmware](https://img.shields.io/badge/Install_Firmware-ESPHome-03A9F4?style=for-the-badge&logo=esphome&logoColor=white)](https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/)
+
+Select your board, connect it with a USB cable and click Install. No ESPHome needed.
 
 </br>
 
