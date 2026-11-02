@@ -1,11 +1,11 @@
-#Validate
+#ESPHome Validate
 #Každý PR so zmenou v ESPHome Config (napr. od ESPHome Config Sync z private repa):
 #- skontroluje všetky dosky najnovším ESPHome (rovnaké kópie, z ktorých sa robí firmware)
 #- výsledok napíše do PR (chyby aj varovania) a nastaví ✅/❌
 #- ❌ iba pri chybe, varovania nevadia
 #- PR od bota sa zamkne → komentovať môžu iba správcovia repa
-#Firmware sa tu NEROBÍ, iba po Merge (.github/workflows/firmware.yml)
-name: Validate
+#Firmware sa tu NEROBÍ, iba po Merge (.github/workflows/esphome-firmware.yml)
+name: ESPHome Validate
 
 on:
   pull_request:
@@ -13,13 +13,13 @@ on:
       - main
     paths:
       - "ESPHome Config/**"
-      - ".github/firmware/**"
-      - ".github/workflows/validate.yml"
+      - ".github/esphome-firmware/**"
+      - ".github/workflows/esphome-validate.yml"
 
 permissions: {}
 
 concurrency:
-  group: validate-${{ github.event.pull_request.number }}
+  group: esphome-validate-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 env:
@@ -27,7 +27,7 @@ env:
 
 jobs:
   validate:
-    name: Validate
+    name: ESPHome Validate
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -46,35 +46,35 @@ jobs:
           python-version: "3.13"
 
       #Najnovší ESPHome
-      - name: ESPHome version
+      - name: ESPHome Version
         id: esphome
         run: |
           version="$(curl --fail --silent --show-error https://pypi.org/pypi/esphome/json | jq -r '.info.version')"
           echo "version=${version}" >> "${GITHUB_OUTPUT}"
           echo "ESPHome ${version}"
 
-      - name: Python packages
+      - name: Python Packages
         env:
           ESPHOME_VERSION: ${{ steps.esphome.outputs.version }}
         run: |
           python -m pip install --quiet \
-            --requirement .github/firmware/requirements.txt \
+            --requirement .github/esphome-firmware/requirements.txt \
             "esphome==${ESPHOME_VERSION}"
 
-      - name: Prepare
+      - name: ESPHome Prepare
         run: |
-          python .github/firmware/firmware.py prepare \
+          python .github/esphome-firmware/firmware.py prepare \
             --config-dir "${CONFIG_DIR}" \
             --out build
 
-      - name: Validate
+      - name: ESPHome Validate
         id: validate
         env:
           ESPHOME_VERSION: ${{ steps.esphome.outputs.version }}
         run: |
-          python .github/firmware/firmware.py validate \
+          python .github/esphome-firmware/firmware.py validate \
             --build build \
-            --ignore .github/firmware/ignore-warnings.txt \
+            --ignore .github/esphome-firmware/ignore-warnings.txt \
             --esphome-version "${ESPHOME_VERSION}" \
             --report "${RUNNER_TEMP}/report.md" \
             --status "${RUNNER_TEMP}/status.txt"
@@ -82,7 +82,7 @@ jobs:
           cat "${RUNNER_TEMP}/report.md" >> "${GITHUB_STEP_SUMMARY}"
 
       #Výsledok do PR (iba PR z tohto repa, nie z cudzích forkov)
-      - name: Comment
+      - name: Pull Request Comment
         if: github.event.pull_request.head.repo.full_name == github.repository
         env:
           GH_TOKEN: ${{ github.token }}
@@ -95,7 +95,7 @@ jobs:
             --create-if-none
 
       #PR od bota zamknúť (verejnosť nemôže komentovať)
-      - name: Lock
+      - name: Pull Request Lock
         if: github.event.pull_request.user.type == 'Bot' && github.event.pull_request.head.repo.full_name == github.repository
         env:
           GH_TOKEN: ${{ github.token }}
@@ -108,12 +108,12 @@ jobs:
           fi
 
       #❌ iba pri chybe (varovania nevadia)
-      - name: Result
+      - name: ESPHome Validate Result
         env:
           STATUS: ${{ steps.validate.outputs.status }}
         run: |
           if [ "${STATUS}" = "errors" ]; then
-            echo "::error::Validation failed. See the comment in this pull request."
+            echo "::error::ESPHome Validate failed. See the comment in this pull request."
             exit 1
           fi
-          echo "Validation: ${STATUS}"
+          echo "ESPHome Validate: ${STATUS}"

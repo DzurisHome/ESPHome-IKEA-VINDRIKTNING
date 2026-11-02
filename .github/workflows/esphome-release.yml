@@ -1,8 +1,8 @@
 #ESPHome Release
 #Každý pondelok o 16:00 pozrie, či vyšla nová verzia ESPHome.
-#Ak je novšia ako firmware na stránke → spustí Firmware (Validate → Build → stránka).
+#Ak je novšia ako firmware na stránke → spustí ESPHome Firmware (ESPHome Validate → ESPHome Build → stránka).
 #Samostatný workflow: ak ho GitHub vypne (60 dní bez zmien v public repe),
-#Validate aj Firmware po Merge fungujú ďalej. Zapnutie: Actions → ESPHome Release → Enable workflow.
+#ESPHome Validate aj ESPHome Firmware po Merge fungujú ďalej. Zapnutie: Actions → ESPHome Release → Enable workflow.
 name: ESPHome Release
 
 on:
@@ -21,13 +21,13 @@ concurrency:
 
 jobs:
   check:
-    name: Check
+    name: ESPHome Release
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
       actions: write
     steps:
-      - name: Compare versions
+      - name: ESPHome Version Compare
         id: compare
         env:
           OWNER: ${{ github.repository_owner }}
@@ -41,12 +41,12 @@ jobs:
             echo "Firmware is up to date."
             echo "new=false" >> "${GITHUB_OUTPUT}"
           else
-            echo "New ESPHome version."
+            echo "New ESPHome version, starting ESPHome Firmware."
             echo "new=true" >> "${GITHUB_OUTPUT}"
           fi
 
-      - name: Start Firmware
+      - name: ESPHome Firmware Start
         if: steps.compare.outputs.new == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run firmware.yml --repo "${GITHUB_REPOSITORY}" --ref main
+        run: gh workflow run esphome-firmware.yml --repo "${GITHUB_REPOSITORY}" --ref main

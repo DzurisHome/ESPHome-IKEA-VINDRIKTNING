@@ -19,9 +19,9 @@ updates:
     commit-message:
       prefix: "Dependabot"
 
-  #Python balíčky pre Firmware (ruamel.yaml)
+  #Python balíčky pre ESPHome Firmware (ruamel.yaml)
   - package-ecosystem: "pip"
-    directory: "/.github/firmware"
+    directory: "/.github/esphome-firmware"
     schedule:
       interval: "monthly"
       time: "16:00"
