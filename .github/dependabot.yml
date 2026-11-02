@@ -1,0 +1,32 @@
+#Dependabot
+#Raz mesačne (1. deň v mesiaci, 16:00) skontroluje použité GitHub Actions a Python balíčky.
+#Keď je nová verzia → PR v tomto repe, priradený tebe. Merge = aktualizované.
+version: 2
+updates:
+  #GitHub Actions (checkout, build-action, deploy-pages, ...)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      time: "16:00"
+      timezone: "Europe/Bratislava"
+    assignees:
+      - "milandzuris"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "Dependabot"
+
+  #Python balíčky pre Firmware (ruamel.yaml)
+  - package-ecosystem: "pip"
+    directory: "/.github/firmware"
+    schedule:
+      interval: "monthly"
+      time: "16:00"
+      timezone: "Europe/Bratislava"
+    assignees:
+      - "milandzuris"
+    commit-message:
+      prefix: "Dependabot"

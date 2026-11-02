@@ -1,0 +1,180 @@
+#Firmware
+#Pull request: skompiluje firmware pre každú dosku → v PR uvidíš ✅/❌ ešte pred Merge
+#Merge do main: skompiluje firmware a zverejní webovú stránku s tlačidlom Install
+#Dosky sa nájdu automaticky (každý .yaml v ESPHome Config, ktorý má esphome:)
+#Verejné YAML sa nemenia; firmware sa robí z dočasnej kópie (.github/firmware/firmware.py)
+name: Firmware
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "ESPHome Config/**"
+      - ".github/firmware/**"
+      - ".github/workflows/firmware.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "ESPHome Config/**"
+      - ".github/firmware/**"
+      - ".github/workflows/firmware.yml"
+  #Ručné spustenie (tlačidlo Run workflow)
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: firmware-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CONFIG_DIR: ESPHome Config
+  SITE_TITLE: IKEA VINDRIKTNING Firmware
+
+jobs:
+  #Kópie pre firmware + zoznam dosiek
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      boards: ${{ steps.prepare.outputs.boards }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+
+      - name: Python packages
+        run: python -m pip install --quiet --requirement .github/firmware/requirements.txt
+
+      - name: Prepare
+        id: prepare
+        run: |
+          python .github/firmware/firmware.py prepare \
+            --config-dir "${CONFIG_DIR}" \
+            --out build \
+            --matrix "${RUNNER_TEMP}/boards.json"
+          echo "boards=$(cat "${RUNNER_TEMP}/boards.json")" >> "${GITHUB_OUTPUT}"
+
+      - name: Upload build configs
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: build
+          path: build
+          retention-days: 1
+
+  #Kompilácia (každá doska zvlášť, paralelne)
+  build:
+    name: Build ${{ matrix.board }}
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        board: ${{ fromJSON(needs.prepare.outputs.boards) }}
+    steps:
+      - name: Download build configs
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: build
+          path: build
+
+      - name: Compile
+        id: esphome
+        uses: esphome/build-action@ae5408cdbc4f70692bf8e345c4982bca05a93667 # v8.1.0
+        with:
+          yaml-file: build/${{ matrix.board }}.yaml
+          complete-manifest: true
+
+      - name: Collect
+        env:
+          OUT_NAME: ${{ steps.esphome.outputs.name }}
+          BOARD: ${{ matrix.board }}
+        run: |
+          mkdir -p firmware
+          mv "${OUT_NAME}" "firmware/${BOARD}"
+          ls -la "firmware/${BOARD}"
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: firmware-${{ matrix.board }}
+          path: firmware
+          retention-days: 7
+
+  #Webová stránka s tlačidlom Install (iba po Merge do main)
+  publish:
+    name: Publish
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: .github/firmware
+          persist-credentials: false
+
+      - name: Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+
+      - name: Python packages
+        run: python -m pip install --quiet --requirement .github/firmware/requirements.txt
+
+      - name: Download build configs
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: build
+          path: build
+
+      - name: Download firmware
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: firmware-*
+          path: site/firmware
+          merge-multiple: true
+
+      - name: Site
+        env:
+          YAML_URL: ${{ github.server_url }}/${{ github.repository }}/tree/main/ESPHome%20Config
+        run: |
+          python .github/firmware/firmware.py site \
+            --boards build/boards.json \
+            --site site \
+            --title "${SITE_TITLE}" \
+            --yaml-url "${YAML_URL}"
+
+      - name: Configure Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site
+
+      - name: Deploy
+        id: deploy
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
