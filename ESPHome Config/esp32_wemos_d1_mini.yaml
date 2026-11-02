@@ -92,9 +92,10 @@ esp32_ble: #If you don't want ESP32 BLE, Delete (esp32_ble and below that)
   io_capability: keyboard_only
   enable_on_boot: true
   name: "IKEA VINDRIKTNING"
-  disable_bt_logs: false
+  disable_bt_logs: true
   connection_timeout: 20s
   advertising: false
+  advertising_cycle_time: 10s
   max_connections: 5
   max_notifications: 64
 
