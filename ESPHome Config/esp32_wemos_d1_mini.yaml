@@ -101,7 +101,7 @@ esp32_ble: #If you don't want ESP32 BLE, Delete (esp32_ble and below that)
 
 #BLE Proxy
 bluetooth_proxy: #If you don't want Bluetooth Proxy, Delete (bluetooth_proxy and below that)
-  active: false
+  active: false #true = Proxy can connect to BLE devices (locks, sensors), false = Only listens to advertisements
   cache_services: true
   connection_slots: 5
 
