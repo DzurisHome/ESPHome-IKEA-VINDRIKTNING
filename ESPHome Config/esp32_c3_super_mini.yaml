@@ -20,7 +20,7 @@ esp32:
       CONFIG_BT_BLE_ENABLED: y
       CONFIG_BTDM_CTRL_MODE_BLE_ONLY: y
       CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY: y
-      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: n
+      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: y
       CONFIG_BT_BLE_50_FEATURES_SUPPORTED: y
 
 #Logger
@@ -98,15 +98,16 @@ esp32_ble: #If you don't want ESP32 BLE, Delete (esp32_ble and below that)
   io_capability: keyboard_only
   enable_on_boot: true
   name: "IKEA VINDRIKTNING"
-  disable_bt_logs: false
+  disable_bt_logs: true
   connection_timeout: 20s
   advertising: false
+  advertising_cycle_time: 10s
   max_connections: 5
   max_notifications: 64
 
 #BLE Proxy
 bluetooth_proxy: #If you don't want Bluetooth Proxy, Delete (bluetooth_proxy and below that)
-  active: false
+  active: false #true = Proxy can connect to BLE devices (locks, sensors), false = Only listens to advertisements
   cache_services: true
   connection_slots: 5
 
