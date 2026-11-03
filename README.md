@@ -1,7 +1,5 @@
 # ESPHome IKEA VINDRIKTNING
 
-[![Install Firmware](https://img.shields.io/badge/Install_Firmware-ESPHome-03A9F4?style=for-the-badge&logo=esphome&logoColor=white)](https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/)
-
 ## [LinkTree](https://linktr.ee/DzurisHome)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/DzurisHome)
