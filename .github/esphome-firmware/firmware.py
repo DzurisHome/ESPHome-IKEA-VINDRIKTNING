@@ -24,7 +24,7 @@ from pathlib import Path
 from ruamel.yaml import YAML
 from ruamel.yaml.comments import CommentedMap, CommentedSeq
 
-BOARD_NAME_RE = re.compile(r"^\s*board:\s*\S+\s*#\s*([^|]+)", re.MULTILINE)
+BOARD_NAME_RE = re.compile(r"^[ \t]*board:[ \t]*\S+[ \t]*#[ \t]*([^|\n]+)", re.MULTILINE)
 ESP_WEB_TOOLS = "https://unpkg.com/esp-web-tools@10.4.0/dist/web/install-button.js?module"
 LOGGER_BAUD_RATE = 115200
 LOGO_URL = "https://github.com/DzurisHome.png?size=160"
@@ -42,14 +42,35 @@ def yaml_rt():
 # ------------------------------------------------------------------------------
 # Úprava kópie pre firmware
 # ------------------------------------------------------------------------------
+def uses_hardware_uart0(cfg):
+    """ESP8266 má iba jeden hardvérový UART (GPIO1/GPIO3). Ak ho používa uart:
+    (napr. meranie spotreby CSE7766), logger ani Improv cez USB nesmú bežať."""
+    if "esp8266" not in cfg:
+        return False
+    buses = cfg.get("uart")
+    buses = buses if isinstance(buses, list) else [buses]
+    for bus in buses:
+        if not isinstance(bus, dict):
+            continue
+        for key in ("rx_pin", "tx_pin"):
+            pin = bus.get(key)
+            if isinstance(pin, dict):
+                pin = pin.get("number")
+            if str(pin).upper().replace("GPIO0", "GPIO") in ("GPIO1", "GPIO3", "1", "3"):
+                return True
+    return False
+
+
 def make_firmware_config(cfg):
     """Vráti zoznam toho, čo bolo z firmware vynechané."""
     missing = []
+    improv = not uses_hardware_uart0(cfg)
 
     #Logger (Improv cez USB potrebuje zapnutý logger)
     if not isinstance(cfg.get("logger"), dict):
         cfg["logger"] = CommentedMap()
-    cfg["logger"]["baud_rate"] = LOGGER_BAUD_RATE
+    if improv:
+        cfg["logger"]["baud_rate"] = LOGGER_BAUD_RATE
 
     #WiFi: bez siete, bez hesiel, bez statickej IP → nastaví sa po nahratí
     wifi = cfg.get("wifi")
@@ -68,7 +89,7 @@ def make_firmware_config(cfg):
     #WiFi Hotspot + Improv
     if "captive_portal" not in cfg:
         cfg["captive_portal"] = None
-    if "improv_serial" not in cfg:
+    if improv and "improv_serial" not in cfg:
         keys = list(cfg.keys())
         cfg.insert(keys.index("captive_portal") + 1, "improv_serial", None)
 
@@ -134,6 +155,13 @@ def features_of(cfg):
         return False
 
     checks = [
+        (has_platform("switch", "gpio", "") and any(e.get("id") == "relay" for e in entries(cfg, "switch")), "Relay"),
+        (has_platform("sensor", "cse7766") or has_platform("sensor", "hlw8012") or has_platform("sensor", "bl0937"), "Voltage, Current, Power"),
+        (has_platform("sensor", "ntc"), "Internal Temperature (NTC)"),
+        (any(e.get("id") == "overload_protection" for e in entries(cfg, "select")), "Overload Protection"),
+        (any(e.get("id") == "overheat_protection" for e in entries(cfg, "select")), "Overheat Protection"),
+        (has_platform("binary_sensor", "gpio", "Button"), "Power Button"),
+        (has_platform("light", "status_led"), "Status LED"),
         (has_platform("sensor", "pm1006"), "PM2.5"),
         (has_platform("text_sensor", "template", "Air Quality"), "Air Quality"),
         (has_platform("text_sensor", "template", "Color"), "Color"),
@@ -177,11 +205,14 @@ def cmd_prepare(args):
         m = BOARD_NAME_RE.search(text)
         name = m.group(1).strip() if m else f.stem
         missing = make_firmware_config(cfg)
-        with open(out_dir / f.name, "w", encoding="utf-8") as fh:
+        board_id = re.sub(r"[^a-z0-9]+", "-", f.stem.lower()).strip("-")
+        with open(out_dir / f"{board_id}.yaml", "w", encoding="utf-8") as fh:
             y.dump(cfg, fh)
         boards.append({
-            "id": f.stem,
+            "id": board_id,
+            "file": f.name,
             "name": name,
+            "improv": "improv_serial" in cfg,
             "ap": str(cfg["wifi"]["ap"].get("ssid") or ""),
             "features": features_of(cfg),
             "missing": missing,
@@ -246,11 +277,11 @@ def cmd_validate(args):
     lines = [head, "", f"ESPHome `{args.esphome_version}`", "", "| Board | File | Result |", "|---|---|---|"]
     for b, errors, warnings in results:
         result = "❌ Error" if errors else ("⚠️ Warning" if warnings else "✅ OK")
-        lines.append(f"| {b['name']} | `{b['id']}.yaml` | {result} |")
+        lines.append(f"| {b['name']} | `{b['file']}` | {result} |")
     for b, errors, warnings in results:
         if not errors and not warnings:
             continue
-        lines += ["", f"#### {b['name']} (`{b['id']}.yaml`)", ""]
+        lines += ["", f"#### {b['name']} (`{b['file']}`)", ""]
         if errors:
             lines += ["**Errors**", "", "```"] + errors + ["```", ""]
         if warnings:
@@ -316,15 +347,12 @@ a {{ color:var(--accent); }}
       </esp-web-install-button>
     </div>
     <p class="note">Select your board, connect it with a USB cable and click Install.</p>
+    <p class="note" id="download"></p>
   </div>
 
   <div class="card">
     <h2>2. Set up Wi-Fi</h2>
-    <ol>
-      <li>Right after the install, this page asks for your Wi-Fi name and password.</li>
-      <li>Skipped it? The device starts the Wi-Fi hotspot <b>{ap}</b>. Connect to it with your phone and enter your Wi-Fi there.</li>
-      <li>Home Assistant finds the device automatically (ESPHome integration).</li>
-    </ol>
+    <ol id="wifi"></ol>
   </div>
 
   <div class="card">
@@ -350,6 +378,22 @@ function render() {{
   }};
   fill("features", b.features, "ok");
   fill("missing", b.missing.length ? b.missing : ["Nothing"], "no");
+  const steps = [];
+  if (b.improv) steps.push("Right after the install, this page asks for your Wi-Fi name and password.");
+  steps.push((b.improv ? "Skipped it? The" : "After the install, the") + " device starts the Wi-Fi hotspot \u201c" + b.ap + "\u201d. Connect to it with your phone and enter your Wi-Fi there.");
+  steps.push("Home Assistant finds the device automatically (ESPHome integration).");
+  fill("wifi", steps, "");
+  const dl = document.getElementById("download");
+  if (b.bin) {{
+    dl.innerHTML = "";
+    const a = document.createElement("a");
+    a.href = "firmware/" + b.id + "/" + b.bin;
+    a.textContent = "Download .bin";
+    a.setAttribute("download", "");
+    dl.append(a, " for OTA update (e.g. from Tasmota or the ESPHome Web Server).");
+  }} else {{
+    dl.textContent = "";
+  }}
 }}
 select.addEventListener("change", render);
 render();
@@ -369,6 +413,11 @@ def cmd_site(args):
     for b in boards:
         if b not in built:
             print(f"::warning::Firmware missing for: {b['id']}")
+    #Súbor na stiahnutie (OTA) z manifestu
+    for b in built:
+        m = json.loads((site / "firmware" / b["id"] / "manifest.json").read_text(encoding="utf-8"))
+        build = (m.get("builds") or [{}])[0]
+        b["bin"] = (build.get("ota") or {}).get("path") or ((build.get("parts") or [{}])[0]).get("path") or ""
 
     options = "".join(
         f'<option value="{html.escape(b["id"])}">{html.escape(b["name"])}</option>' for b in built
@@ -380,7 +429,6 @@ def cmd_site(args):
         version=html.escape(str(args.esphome_version)),
         options=options,
         first_manifest=f"firmware/{built[0]['id']}/manifest.json",
-        ap=html.escape(built[0].get("ap") or "the device hotspot"),
         yaml_url=html.escape(args.yaml_url),
         boards_json=json.dumps(built).replace("</", "<\\/"),
     )
