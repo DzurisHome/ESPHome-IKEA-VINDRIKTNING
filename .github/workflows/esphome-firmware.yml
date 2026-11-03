@@ -6,7 +6,8 @@
 #
 #Najprv ESPHome Validate. Pri CHYBE sa firmware nerobí, na stránke ostane starý
 #a otvorí sa Issue s textom chyby (zamknuté, verejnosť nemôže komentovať).
-#Varovania build nezastavia. Po úspešnom builde sa Issue samo zavrie.
+#Varovania build nezastavia: firmware sa zverejní a varovania prídu v samostatnom Issue.
+#Po úspešnom builde sa Issue s chybou samo zavrie, Issue s varovaniami keď varovania zmiznú.
 #Verejné YAML sa nemenia; firmware sa robí z dočasnej kópie (.github/esphome-firmware/firmware.py)
 name: ESPHome Firmware
 
@@ -32,6 +33,7 @@ env:
   SITE_TITLE: Dzuriš Home IKEA VINDRIKTNING Firmware
   REVIEWER: milandzuris
   ISSUE_LABEL: ESPHome Firmware
+  WARNING_LABEL: ESPHome Firmware Warnings
 
 jobs:
   #Najnovšia verzia ESPHome (rovnaká pre Validate aj Build)
@@ -192,7 +194,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          sparse-checkout: .github/firmware
+          sparse-checkout: .github/esphome-firmware
           persist-credentials: false
 
       - name: Python
@@ -262,7 +264,6 @@ jobs:
           persist-credentials: false
 
       - name: Download Report
-        if: needs.prepare.result == 'failure'
         continue-on-error: true
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
@@ -280,6 +281,17 @@ jobs:
           run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           if [ "${PREPARE}" = "success" ] && [ "${BUILD}" = "success" ] && [ "${PUBLISH}" = "success" ]; then
             bash .github/shared/report-issue.sh "${ISSUE_LABEL}" "" ok
+            #Firmware zverejnený, varovania iba nahlásiť
+            if [ "$(cat report/status.txt 2> /dev/null)" = "warnings" ]; then
+              {
+                echo "**ESPHome Firmware was built and published, but ESPHome reported warnings.**"
+                echo
+                cat report/report.md
+              } > "${RUNNER_TEMP}/warnings.md"
+              bash .github/shared/report-issue.sh "${WARNING_LABEL}" "ESPHome Firmware: Warnings" problem "${RUNNER_TEMP}/warnings.md"
+            else
+              bash .github/shared/report-issue.sh "${WARNING_LABEL}" "" ok
+            fi
             exit 0
           fi
           {
