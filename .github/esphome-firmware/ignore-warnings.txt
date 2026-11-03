@@ -1,4 +1,5 @@
 #ESPHome Firmware — varovania, ktoré sa ignorujú
 #Jeden riadok = časť textu varovania. Riadky s # sa preskočia.
-#Príklad:
-#is a strapping pin
+
+#ESP32 C3 Super Mini: GPIO8 (UART RX pre PM1006) je strapping pin, je to vlastnosť dosky
+GPIO8 is a strapping pin
