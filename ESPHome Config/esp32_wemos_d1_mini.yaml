@@ -36,7 +36,7 @@ wifi:
     subnet: #Router Subnet IP
   ap:
     ssid: "IKEA VINDRIKTNING Dzuriš Home AP"
-    password: #Acess Point password or !secret ap_password
+    password: #Access Point password or !secret ap_password
     ap_timeout: 6min
   reboot_timeout: 15min
   power_save_mode: none
