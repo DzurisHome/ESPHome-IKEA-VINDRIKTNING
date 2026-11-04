@@ -1,0 +1,83 @@
+name: 🐞 Bug Report
+description: Something is not working with IKEA VINDRIKTNING
+title: "[Bug]: "
+labels: ["bug"]
+assignees: ["milandzuris"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill in as much as you can.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you expected to happen instead.
+    validations:
+      required: true
+  - type: dropdown
+    id: firmware
+    attributes:
+      label: Firmware
+      description: How did you install the firmware?
+      options:
+        - Ready-made Firmware (Firmware Installer)
+        - Own Firmware from ESPHome Config
+        - Own modified Config
+    validations:
+      required: true
+
+  - type: dropdown
+    id: board
+    attributes:
+      label: ESP Board
+      options:
+        - ESP32 Wemos D1 Mini
+        - ESP32 C3 Super Mini
+        - XIAO ESP32-C3
+        - ESP8266 Wemos D1 Mini
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: esphome_version
+    attributes:
+      label: ESPHome Version
+      description: Shown in ESPHome Dashboard or in the device Web Server.
+      placeholder: "2026.10.2"
+    validations:
+      required: true
+  - type: dropdown
+    id: connection
+    attributes:
+      label: Connected to
+      multiple: true
+      options:
+        - Home Assistant (ESPHome API)
+        - MQTT
+        - Web Server only
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. ...
+        2. ...
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Device logs from ESPHome. Remove passwords and IP addresses you don't want to share.
+      render: text
+  - type: textarea
+    id: config
+    attributes:
+      label: Your Config
+      description: Only if you changed the config. Remove passwords and secrets!
+      render: yaml
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Screenshots, photos of wiring, ...

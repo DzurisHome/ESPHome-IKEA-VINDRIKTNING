@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 ESPHome Documentation
+    url: https://esphome.io
+    about: General ESPHome questions, components and configuration.
+  - name: 💬 ESPHome Discord
+    url: https://discord.gg/KhAMKrd
+    about: Ask the ESPHome community for help.

@@ -1,0 +1,23 @@
+name: ✨ Feature Request
+description: Suggest an idea for IKEA VINDRIKTNING
+title: "[Feature]: "
+labels: ["enhancement"]
+assignees: ["milandzuris"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your Idea
+      description: What would you like to add or change?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What problem does it solve or what would it improve?
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Links, screenshots, examples from other projects, ...
