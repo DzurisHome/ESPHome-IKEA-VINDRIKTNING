@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="72" viewBox="0 0 440 72" role="img" aria-label="Install Ready-made Firmware">
+<title>Install Ready-made Firmware</title>
+<rect x="1.5" y="1.5" width="437" height="69" rx="16" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="3"/>
+<g transform="translate(20 18) scale(1.5)"><path fill="#18BCF2" d="M11.999.311c-.384 0-.769.146-1.06.437l-9.878 9.88C.478 11.21 0 12.364 0 13.189v9c0 .825.675 1.5 1.5 1.5h5.899V8.755a.6.6 0 0 1 .6-.6h8a.6.6 0 0 1 .6.6v2.4a.6.6 0 0 1-.6.6h-5v1.2h5a.6.6 0 0 1 .6.6v2.4a.6.6 0 0 1-.6.6h-5v1.2h5a.6.6 0 0 1 .6.6v2.4a.6.6 0 0 1-.6.6h-5.6a.6.6 0 1 1 0-1.2h5v-1.2h-5a.6.6 0 0 1-.6-.6v-2.4a.6.6 0 0 1 .6-.6h5v-1.2h-5a.6.6 0 0 1-.6-.6v-2.4a.6.6 0 0 1 .6-.6h5v-1.2H8.6v14.334h13.9c.825 0 1.5-.675 1.5-1.5v-9c0-.825-.478-1.978-1.061-2.561l-9.88-9.88A1.5 1.5 0 0 0 12 .311"/></g>
+<line x1="72" y1="18" x2="72" y2="54" stroke="#0B1620" stroke-opacity="0.2" stroke-width="2"/>
+<text x="88" y="37" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="16.5" font-weight="700" letter-spacing="0.2" fill="#0B1620">INSTALL READY-MADE FIRMWARE</text>
+<text x="88" y="55" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="0.7" fill="#18BCF2">ONE CLICK · NO ESPHOME NEEDED</text>
+<path d="M410 28 l8 8 -8 8" fill="none" stroke="#18BCF2" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
