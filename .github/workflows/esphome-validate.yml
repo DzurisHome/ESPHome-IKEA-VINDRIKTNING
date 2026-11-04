@@ -3,7 +3,7 @@
 #- skontroluje všetky dosky najnovším ESPHome (rovnaké kópie, z ktorých sa robí firmware)
 #- výsledok napíše do PR (chyby aj varovania) a nastaví ✅/❌
 #- ❌ iba pri chybe, varovania nevadia
-#- PR od bota sa zamkne → komentovať môžu iba správcovia repa
+#Zamknutie PR: .github/workflows/pull-request-lock.yml
 #Firmware sa tu NEROBÍ, iba po Merge (.github/workflows/esphome-firmware.yml)
 name: ESPHome Validate
 
@@ -93,19 +93,6 @@ jobs:
             --body-file "${RUNNER_TEMP}/report.md" \
             --edit-last \
             --create-if-none
-
-      #PR od bota zamknúť (verejnosť nemôže komentovať)
-      - name: Pull Request Lock
-        if: github.event.pull_request.user.type == 'Bot' && github.event.pull_request.head.repo.full_name == github.repository
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          LOCKED: ${{ github.event.pull_request.locked }}
-        run: |
-          if [ "${LOCKED}" != "true" ]; then
-            gh api --method PUT "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/lock" -f lock_reason=resolved > /dev/null
-            echo "PR #${PR_NUMBER} locked."
-          fi
 
       #❌ iba pri chybe (varovania nevadia)
       - name: ESPHome Validate Result
