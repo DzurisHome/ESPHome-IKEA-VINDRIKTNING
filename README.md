@@ -1,15 +1,16 @@
+<a href="https://esphome.io"><img align="right" src="https://img.shields.io/badge/ESPHome-Compatible-000000?style=for-the-badge&logo=esphome&logoColor=white" alt="ESPHome Compatible"></a>
+
 # ESPHome IKEA VINDRIKTNING
 
-## [LinkTree](https://linktr.ee/DzurisHome)
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/DzurisHome)
+<a href="https://linktr.ee/DzurisHome"><img src="https://img.shields.io/badge/Linktree-DzurisHome-43E55E?style=for-the-badge&logo=linktree&logoColor=white" alt="Linktree"></a>
+<a href="https://ko-fi.com/DzurisHome"><img src="https://img.shields.io/badge/Ko--fi-Support_me-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white" alt="Support me on Ko-fi"></a>
 
 </br>
 
 ### How to make IKEA VINDRIKTNING Smart
 
 ### Benefits
-- Locally
+- Local Control
 - MQTT
 - Home Assistant Autodiscovery
 - Web Server
@@ -19,26 +20,26 @@
 </br>
 
 > [!NOTE]
-> ### Whats need
-> 
-> ESPHome or Install Ready-made [Firmware](https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/)
-> 
+> ### What You Need
+>
+> ESPHome or [Ready-made Firmware](https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/)
+>
 > ESP Board with 5V or Step-Down Converter for ESP Board with 3V
-> 
+>
 > Some Cables
-> 
+>
 > Soldering Iron
-> 
-> Soldering Gun
-> 
+>
+> Hot Glue Gun
+>
 > Tools
 >
 > USB Cable for Flashing Board
 
 </br>
 
-![Home Assistant ESPHome Bedroom Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/Home%20Assistant%20ESPHome%20Bedroom%20Air%20Quality.png)
-![ESPHome WebServer Bedroom Air Quality](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/ESPHome%20WebServer%20Bedroom%20Air%20Quality.png)
+![Home Assistant ESPHome Bedroom Air Quality](Images/Home%20Assistant%20ESPHome%20Bedroom%20Air%20Quality.png)
+![ESPHome WebServer Bedroom Air Quality](Images/ESPHome%20WebServer%20Bedroom%20Air%20Quality.png)
 
 </br>
 
@@ -46,15 +47,17 @@
 > ### Recommendations
 >
 > Boards [XIAO ESP32-C3](https://s.click.aliexpress.com/e/_Dd9y9cz), [ESP32 Wemos D1 Mini](https://s.click.aliexpress.com/e/_DFpDpnJ), [ESP32 C3 Super Mini](https://s.click.aliexpress.com/e/_DlP529f) or [ESP8266 Wemos D1 Mini](https://s.click.aliexpress.com/e/_Dm8FxHL)
-> 
+>
 > Cables [Dupont Line](https://s.click.aliexpress.com/e/_DFdLicl)
 >
-> [Dzuriš Home Firmware Installer](https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/) or [ESPHome Web Flasher](https://web.esphome.io/) for Flashing ESP Board
+> **Ready-made Firmware** → [Firmware Installer](https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/) — pick your board and click Install, no ESPHome needed
+>
+> **Own Firmware** (built in your ESPHome) → [ESPHome Web](https://web.esphome.io/)
 
 </br>
 
-![IKEA VINDRIKTNING PCB](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%20PCB.png)
-![IKEA VINDRIKTNING PCB Cables](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%20PCB%20Cables.png)
+![IKEA VINDRIKTNING PCB](Images/IKEA%20VINDRIKTNING%20PCB.png)
+![IKEA VINDRIKTNING PCB Cables](Images/IKEA%20VINDRIKTNING%20PCB%20Cables.png)
 
 | VINDRIKTNING | ESP Board or Step-Down Converter |
 |--------------|----------------------------------|
@@ -66,15 +69,15 @@
 | 🟡 REST      | GPIO21              |
 | 🟢 FAN-      | GPIO16              |
 
-| VINDRIKTNING | XIAO-ESP32-C3 |
+| VINDRIKTNING | XIAO ESP32-C3 |
 |--------------|---------------|
 | 🟡 REST      | GPIO6         |
 | 🟢 FAN-      | GPIO9         |
 
-| VINDRIKTNING | ESP32 C3 Supermini |
-|--------------|--------------------|
-| 🟡 REST      | GPIO8              |
-| 🟢 FAN-      | GPIO3              |
+| VINDRIKTNING | ESP32 C3 Super Mini |
+|--------------|---------------------|
+| 🟡 REST      | GPIO8               |
+| 🟢 FAN-      | GPIO3               |
 
 | VINDRIKTNING | ESP8266 Wemos D1 Mini |
 |--------------|-----------------------|
@@ -84,22 +87,21 @@
 </br>
 
 ### ESPHome Configs
-- [Example](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/example.yaml)
-- [ESP32 Wemos D1 Mini](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp32_wemos_d1_mini.yaml)
-- [ESP32 C3 Super Mini](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp32_c3_super_mini.yaml)
-- [ESP8266 Wemos D1 Mini](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/ESPHome%20Config/esp8266_wemos_d1_mini.yaml)
-- RP2040 SOON Maybe
+- [Example](ESPHome%20Config/Example.yaml)
+- [ESP32 Wemos D1 Mini](ESPHome%20Config/ESP32_Wemos_D1_Mini.yaml)
+- [ESP32 C3 Super Mini](ESPHome%20Config/ESP32_C3_Super_Mini.yaml)
+- [ESP8266 Wemos D1 Mini](ESPHome%20Config/ESP8266_Wemos_D1_Mini.yaml)
 
-### ESPHome Firmwares
-[![Install Firmware](https://img.shields.io/badge/Install_Firmware-ESPHome-03A9F4?style=for-the-badge&logo=esphome&logoColor=white)](https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/)
+### Ready-made Firmware
+[![Install Ready-made Firmware](https://img.shields.io/badge/Install-Ready--made_Firmware-03A9F4?style=for-the-badge&logo=esphome&logoColor=white)](https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/)
 
 Select your board, connect it with a USB cable and click Install. No ESPHome needed.
 
 </br>
 
-![IKEA VINDRIKTNING 0.1](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.1.png)
-![IKEA VINDRIKTNING 0.2](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.2.png)
-![IKEA VINDRIKTNING 0.4](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.4.png)
+![IKEA VINDRIKTNING 0.1](Images/IKEA%20VINDRIKTNING%200.1.png)
+![IKEA VINDRIKTNING 0.2](Images/IKEA%20VINDRIKTNING%200.2.png)
+![IKEA VINDRIKTNING 0.4](Images/IKEA%20VINDRIKTNING%200.4.png)
 
 ### Colors
 🟩 `GREEN` 0-35 μg/m³
@@ -110,11 +112,12 @@ Select your board, connect it with a USB cable and click Install. No ESPHome nee
 
 </br>
 
-![IKEA VINDRIKTNING 0.6](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.6.png)
-![IKEA VINDRIKTNING 0.7](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.7.png)
-![IKEA VINDRIKTNING 0.8](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%200.8.png)
-![IKEA VINDRIKTNING on the Shelf](https://github.com/DzurisHome/ESPHome-IKEA-VINDRIKTNING/blob/main/Images/IKEA%20VINDRIKTNING%20on%20the%20Shelf.png)
+![IKEA VINDRIKTNING 0.6](Images/IKEA%20VINDRIKTNING%200.6.png)
+![IKEA VINDRIKTNING 0.7](Images/IKEA%20VINDRIKTNING%200.7.png)
+![IKEA VINDRIKTNING 0.8](Images/IKEA%20VINDRIKTNING%200.8.png)
+![IKEA VINDRIKTNING on the Shelf](Images/IKEA%20VINDRIKTNING%20on%20the%20Shelf.png)
 
-## [LinkTree](https://linktr.ee/DzurisHome)
+</br>
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/DzurisHome)
+<a href="https://linktr.ee/DzurisHome"><img src="https://img.shields.io/badge/Linktree-DzurisHome-43E55E?style=for-the-badge&logo=linktree&logoColor=white" alt="Linktree"></a>
+<a href="https://ko-fi.com/DzurisHome"><img src="https://img.shields.io/badge/Ko--fi-Support_me-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white" alt="Support me on Ko-fi"></a>
