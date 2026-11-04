@@ -1,0 +1,36 @@
+#Pull Request Lock
+#Každý nový PR (napr. od ESPHome Config Sync alebo Dependabota) sa hneď zamkne → komentovať môžu iba správcovia repa.
+#Kód z PR sa nespúšťa, iba sa zavolá GitHub API na zamknutie.
+name: Pull Request Lock
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+
+permissions: {}
+
+jobs:
+  lock:
+    name: Pull Request Lock
+    #Iba PR z tohto repa (nie z Fork)
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Pull Request Lock
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          LOCKED: ${{ github.event.pull_request.locked }}
+        run: |
+          if [ "${LOCKED}" != "true" ]; then
+            gh api --method PUT "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/lock" -f lock_reason=resolved > /dev/null
+            echo "PR #${PR_NUMBER} locked."
+          else
+            echo "PR #${PR_NUMBER} is already locked."
+          fi
