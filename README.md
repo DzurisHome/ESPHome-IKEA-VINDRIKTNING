@@ -1,4 +1,4 @@
-# ESPHome IKEA VINDRIKTNING <a href="https://esphome.io"><img align="right" src="Images/Buttons/ESPHome-Compatible.svg" height="40" alt="Compatible with ESPHome"></a>
+# ESPHome IKEA VINDRIKTNING <a href="https://esphome.io"><img align="right" src="Images/Buttons/ESPHome-Compatible.svg" height="48" alt="Compatible with ESPHome"></a>
 
 <a href="https://linktr.ee/DzurisHome"><img src="Images/Buttons/Linktree.svg" height="36" alt="Find me on Linktree"></a>&nbsp;
 <a href="https://ko-fi.com/DzurisHome"><img src="https://ko-fi.com/img/githubbutton_sm.svg" height="36" alt="Support me on Ko-fi"></a>
@@ -36,7 +36,7 @@
 
 </br>
 
-<img src="Images/Home%20Assistant%20ESPHome%20Bedroom%20Air%20Quality.png" height="423" alt="Home Assistant ESPHome Bedroom Air Quality"> <img src="Images/ESPHome%20WebServer%20Bedroom%20Air%20Quality.png" height="423" alt="ESPHome WebServer Bedroom Air Quality">
+<img src="Images/Home%20Assistant%20ESPHome%20Bedroom%20Air%20Quality.png" height="494" alt="Home Assistant ESPHome Bedroom Air Quality"> <img src="Images/ESPHome%20WebServer%20Bedroom%20Air%20Quality.png" height="494" alt="ESPHome WebServer Bedroom Air Quality">
 
 </br>
 
@@ -53,7 +53,7 @@
 
 </br>
 
-<img src="Images/IKEA%20VINDRIKTNING%20PCB.png" height="360" alt="IKEA VINDRIKTNING PCB"> <img src="Images/IKEA%20VINDRIKTNING%20PCB%20Cables.png" height="360" alt="IKEA VINDRIKTNING PCB Cables">
+<img src="Images/IKEA%20VINDRIKTNING%20PCB.png" height="420" alt="IKEA VINDRIKTNING PCB"> <img src="Images/IKEA%20VINDRIKTNING%20PCB%20Cables.png" height="420" alt="IKEA VINDRIKTNING PCB Cables">
 
 | VINDRIKTNING | ESP Board or Step-Down Converter |
 |--------------|----------------------------------|
@@ -89,7 +89,7 @@
 - [ESP8266 Wemos D1 Mini](ESPHome%20Config/ESP8266_Wemos_D1_Mini.yaml)
 
 ### Firmware
-<a href="https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/"><img src="Images/Buttons/Ready-made-Firmware.svg" width="420" alt="Install Ready-made Firmware"></a>
+<a href="https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/"><img src="Images/Buttons/Ready-made-Firmware.svg" width="374" alt="Install Ready-made Firmware"></a>
 
 </br>
 
@@ -106,9 +106,9 @@
 
 </br>
 
-<img src="Images/IKEA%20VINDRIKTNING%200.6.png" height="300" alt="IKEA VINDRIKTNING 0.6"> <img src="Images/IKEA%20VINDRIKTNING%200.7.png" height="300" alt="IKEA VINDRIKTNING 0.7"> <img src="Images/IKEA%20VINDRIKTNING%200.8.png" height="300" alt="IKEA VINDRIKTNING 0.8">
+<img src="Images/IKEA%20VINDRIKTNING%200.6.png" height="350" alt="IKEA VINDRIKTNING 0.6"> <img src="Images/IKEA%20VINDRIKTNING%200.7.png" height="350" alt="IKEA VINDRIKTNING 0.7"> <img src="Images/IKEA%20VINDRIKTNING%200.8.png" height="350" alt="IKEA VINDRIKTNING 0.8">
 
-<img src="Images/IKEA%20VINDRIKTNING%20on%20the%20Shelf.png" height="320" alt="IKEA VINDRIKTNING on the Shelf">
+<img src="Images/IKEA%20VINDRIKTNING%20on%20the%20Shelf.png" height="373" alt="IKEA VINDRIKTNING on the Shelf">
 
 </br>
 
