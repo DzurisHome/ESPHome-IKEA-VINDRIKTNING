@@ -92,10 +92,8 @@
 - [ESP32 C3 Super Mini](ESPHome%20Config/ESP32_C3_Super_Mini.yaml)
 - [ESP8266 Wemos D1 Mini](ESPHome%20Config/ESP8266_Wemos_D1_Mini.yaml)
 
-### Ready-made Firmware
+### Firmware
 <a href="https://dzurishome.github.io/ESPHome-IKEA-VINDRIKTNING/"><img src="Images/Buttons/Ready-made-Firmware.svg" width="420" alt="Install Ready-made Firmware"></a>
-
-Select your board, connect it with a USB cable and click Install. No ESPHome needed.
 
 </br>
 
